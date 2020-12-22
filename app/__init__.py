@@ -34,14 +34,15 @@ def create_app(enviroment):
     from app.models.DescripcionGuia import DescripcionGuia
 
     #views
+    from app.login import login as viewlogin
+    app.register_blueprint(viewlogin)
     from app.gerente import gerente as viewGerente
     app.register_blueprint(viewGerente)
 
     from app.secretaria import secretaria as viewsecretaria
     app.register_blueprint(viewsecretaria)
 
-    from app.login import login as viewlogin
-    app.register_blueprint(viewlogin)
+    
 
     from app.admin import admin as viewadmin
     app.register_blueprint(viewadmin)
