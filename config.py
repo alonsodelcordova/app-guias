@@ -10,7 +10,7 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgres://remcrnwmxlvnpw:c4b0269e77924721ef4ae160a972279331a9972382109d544a7ab8986388f048@ec2-34-238-26-109.compute-1.amazonaws.com:5432/dckonl1hua8af1'
+    SQLALCHEMY_DATABASE_URI = config('DATABASE_URL', default='localhost')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 config = {
