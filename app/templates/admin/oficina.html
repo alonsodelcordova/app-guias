@@ -1,0 +1,108 @@
+{% extends 'base/base-gerente.html'%} 
+{% block content %}
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <h5 class="font-weight-bold text-primary">Agregar Oficina</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md">
+                            <label for="nombre" class="col-form-label" >Nombre: </label>
+                            <input type="text" name="nombre" class="form-control" id="nombre" required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md">
+                            <label for="id_departamento" class="col-form-label">Departamento: </label>
+                            <select name="id_departamento" class="form-control" id="id_departamento" onchange="mostrarProvincias()">
+                                <option value="0" hidden>Seleccionar</option>
+                                {% for departamento in list_departamento%}
+                                <option value="{{departamento.id}}">{{departamento.nombre_departamento}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="col-md">
+                            <label for="id_provincia" class="col-form-label">Provincia: </label>
+                            <select name="id_provincia" class="form-control" id="id_provincia" onchange="mostrarDistritos()">
+                                <option value="0" hidden>Seleccionar</option>
+                            </select>
+                        </div>
+                        <div class="col-md">
+                            <label for="id_distrito" class="col-form-label">Distrito: </label>
+                            <select name="id_distrito" class="form-control" id="id_distrito" required>
+                                <option value="0" hidden>Seleccionar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md">
+                            <label for="direccion" class="col-form-label" >Direccion: </label>
+                            <input type="text" name="direccion" class="form-control" id="direccion" required >
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="form-group">
+                    <div class="col-md">
+                        <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 " >Agregar</button>
+                        <button type="reset"  class="btn btn-outline-danger">Limpiar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h5 class="font-weight-bold text-primary">Lista de Oficinas</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Direccion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if oficinas%}
+                            {%for oficina in oficinas%}
+                            <tr>
+                                <td>{{oficina.id}}</td>
+                                <td>{{oficina.nombre_oficina}}</td>
+                                <td>{{oficina.direccion}} <br> 
+                                    {{oficina.distrito.nombre_distrito}} - {{oficina.distrito.provincia.nombre_provincia}} - 
+                                    {{oficina.distrito.provincia.departamento.nombre_departamento}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning " onclick="abrirMenu()"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger " onclick="eliminarMenu()"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        {%else%}
+                            <tr>
+                                <td colspan="4" class="text-center">No hay datos disponibles</td>
+                            </tr>
+                        {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/direccion.js') }}"></script>
+{%endblock%}

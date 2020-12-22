@@ -1,0 +1,83 @@
+{% extends 'base/base-gerente.html'%} {% block content %}
+
+{%if factura%}
+<div class="card border-left-primary shadow h-100 ">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class=" font-weight-bold text-primary text-uppercase">
+                    Factura N° : {{factura.numero_factura}}
+                </div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+        </div>
+        <p>Fecha de Emision : {{factura.fecha_emision}} <br>
+            Pago: {{factura.tipo_moneda.nombre_moneda}} {{factura.total}} <br>
+            Cliente : {{factura.cliente.razon_social}} <br>
+            Observacion : {{factura.observacion}}
+        </p>
+    </div>
+</div>
+<br>
+{%endif%}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Guias de Remision </h5>
+            <a class="btn btn-outline-info" href="/consultar-factura"><i class="fa fa-file-invoice-dollar"></i> Facturas</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" onkeyup="buscarTabla()"
+                placeholder="Buscar Aqui...">
+        </div>
+
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="tableData">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha Inicio</th>
+                        <th>Factura</th>
+                        <th>Oficina</th>
+                        <th>Cliente</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if list_guia%}
+                    {%for guia in list_guia%}
+                    <tr>
+                        <td>{{guia.id}}</td>
+                        <td>{{guia.fecha_inicio.strftime('%Y-%m-%d')}}</td>
+                        <td>{{guia.factura.numero_factura}}</td>
+                        <td>{{guia.oficina.nombre_oficina}}</td>
+                        <td>{{guia.factura.cliente.razon_social}}</td>
+                        <td>
+                            <p>
+                                <a href="/imprimir-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
+                                    data-placement="left" title="Descripciones"> <i class="fa fa-list-alt"></i>Ver</a>
+                            </p>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="6" class="text-center">No hay datos disponibles</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

@@ -1,0 +1,92 @@
+{% extends 'base/base-gerente.html'%}
+{% block content %}
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Agregar Provincias</h5>
+            <a href="/departamento"><i class="fas fa-chevron-left"></i> Regresar</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <h4>Departamento: {{departamento.nombre_departamento}}</h4>
+        <form method="POST">
+            <input type="hidden" name="id_departamento" value="{{departamento.id}}">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="nombre" class="col-form-label">Nombre: </label>
+                        <input type="text" name="nombre" class="form-control" id="nombre" autofocus>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <div class="form-group">
+                <div class="col-md">
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Agregar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h5 class="font-weight-bold text-primary">Lista de Provincias</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% if departamento.provincias%}
+            {% for provincia in departamento.provincias%}
+            <div class="col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center mb-2">
+                            <div class="col mr-2">
+                                <div class=" font-weight-bold text-primary text-uppercase">
+                                    {{provincia.nombre_provincia}}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+
+                        {%if provincia.distritos%}
+                        <h6>Distritos</h6>
+                        <hr>
+                        <div class="row">
+                            {%for distrito in provincia.distritos%}
+                            <div class="col-md-6 mb-2">
+                                <div class="card border-left-success shadow">
+                                    <div class="card-body">
+                                        {{distrito.nombre_distrito}}
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                        {%else%}
+                        <h6>Aun no hay distritos</h6>
+                        {%endif%}
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                        <a class="btn btn-outline-success " href="/distrito/{{provincia.id}}">Distritos</a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            {%else%}
+            <h3>No se han encontrado Provincias registrados</h3>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

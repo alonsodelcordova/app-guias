@@ -1,0 +1,77 @@
+{% extends 'base/base-gerente.html'%} 
+{% block content %}
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <h5 class="font-weight-bold text-primary">Tipos de Monedas</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md">
+                            <label for="nombre" class="col-form-label">Nombre: </label>
+                            <input type="text" name="nombre" class="form-control" id="nombre">
+                        </div>
+                        <div class="col-md">
+                            <label for="prefijo" class="col-form-label">Prefijo: </label>
+                            <input type="text" name="prefijo" class="form-control" id="prefijo">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="form-group">
+                    <div class="col-md">
+                        <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 " >Agregar</button>
+                        <button type="reset"  class="btn btn-outline-danger">Limpiar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h5 class="font-weight-bold text-primary">Lista de Monedas</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Prefijo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if list_moneda%}
+                            {%for moneda in list_moneda%}
+                            <tr>
+                                <td>{{moneda.id}}</td>
+                                <td>{{moneda.nombre_moneda}}</td>
+                                <td>{{moneda.prefijo}}</td>
+                                <td>
+                                    <button class="btn btn-warning " ><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger " ><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                        {%else%}
+                            <tr>
+                                <td colspan="4" class="text-center">No hay datos disponibles</td>
+                            </tr>
+                        {%endif%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}

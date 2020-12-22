@@ -1,0 +1,96 @@
+{% extends 'base/base-gerente.html'%} {% block content %}
+
+<!-- Registrar Cargo-->
+<div class="modal fade" id="modalCargo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Nuevo Cargo</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST"  >
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="nombre_cargo" class="col-form-label">Nombre: </label>
+                                <input type="text" name="nombre_cargo" class="form-control" id="nombre_cargo">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Lista de Cargos</h5>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalCargo')"> <i class="fa fa-plus"></i> Agregar Cargo</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% if list_cargo%}
+            {% for cargo in list_cargo%}
+            <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center mb-2">
+                            <div class="col mr-2">
+                                <div class=" font-weight-bold text-primary text-uppercase">
+                                    {{cargo.nombre_cargo}}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                            <h6>Menus:</h6>
+                        <hr>
+                        <div class="row">
+                            {%for menu in cargo.menus%}
+                            <div class="col-md-6 mb-2">
+                                <div class="card border-left-success shadow">
+                                    <div class="card-body">
+                                        <p class="text-success font-weight-bold">{{menu.nombre_menu}}</p> 
+                                        Links: <br>
+                                        {%for link in menu.links%}
+                                            <span class="badge badge-info m-1">{{link.id}}  - {{link.nombre_link}}</span>
+                                        {%endfor%}
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                        <a class="btn btn-outline-success " href="/menu/{{cargo.id}}">Menus</a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            {%else%}
+            <h3>No se han encontrado cargos registrados</h3>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+{%endblock%}

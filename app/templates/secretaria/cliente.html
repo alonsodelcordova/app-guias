@@ -1,0 +1,103 @@
+{% extends 'base/base-gerente.html'%} 
+{% block content %}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Clientes </h5>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-plus"></i> Nuevo Cliente</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Razon Social</th>
+                        <th>Documento</th>
+                        <th>Direccion</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if list_cliente%}
+                    {%for cliente in list_cliente%}
+                    <tr>
+                        <td>{{cliente.id}}</td>
+                        <td>{{cliente.razon_social}}</td>
+                        <td>{{cliente.tipo_documento}} : {{cliente.numero_documento}}</td>
+                        <td>{{cliente.direccion}}</td>
+                        <td>
+                            <button class="btn btn-warning "><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay clientes disponibles</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Registrar Modal-->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Cliente</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" id="form-user">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="razon_social" class="col-form-label">Razon Social: </label>
+                                <input type="text" name="razon_social" class="form-control" id="razon_social" maxlength="50" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="tipo_documento" class="col-form-label">Tipo Documento: </label>
+                                <select name="tipo_documento" class="form-control" id="tipo_documento" required>
+                                    <option value="">Seleccionar</option>
+                                    <option value="RUC">RUC</option>
+                                    <option value="DNI">DNI</option>
+                                    <option value="CE">Carnet de Extranjería</option>
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="numero_documento" class="col-form-label">Numero de Documento: </label>
+                                <input type="number" name="numero_documento" class="form-control" id="numero_documento">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="direccion" class="col-form-label">Dirección: </label>
+                                <input type="text" name="direccion" class="form-control" id="direccion">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

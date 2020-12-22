@@ -1,0 +1,167 @@
+{% extends 'base/base-gerente.html'%}
+{% block content %}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Personas Registradas</h5>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')">Registrar</button>
+        </div>
+
+    </div>
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Dni</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if list_persona%}
+                    {% for persona in list_persona%}
+                    <tr>
+                        <td>{{persona.dni}}</td>
+                        <td>{{persona.nombres}}</td>
+                        <td>{{persona.primer_apellido}} {{persona.segundo_apellido}}</td>
+                        <td>
+                            <a class="btn btn-outline-success " href="/usuario/{{persona.id}}">Usuarios</a>
+                            <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="3">No se han encontrado personas registrados</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Registrar Modal-->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Persona</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="dni" class="col-form-label">Dni: </label>
+                                <input type="number" name="dni" class="form-control" id="dni" autofocus>
+                            </div>
+                            <div class="col-md">
+                                <label for="nombres" class="col-form-label">Nombre: </label>
+                                <input type="text" name="nombres" class="form-control" id="nombres">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="primer_apellido" class="col-form-label">Primer Apellido: </label>
+                                <input type="text" name="primer_apellido" class="form-control" id="primer_apellido">
+                            </div>
+                            <div class="col-md">
+                                <label for="segundo_apellido" class="col-form-label">Segundo Apellido: </label>
+                                <input type="text" name="segundo_apellido" class="form-control" id="segundo_apellido">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="email" class="col-form-label">Email: </label>
+                                <input type="email" name="email" class="form-control" id="email">
+                            </div>
+                            <div class="col-md">
+                                <label for="numero_celular" class="col-form-label">Numero de Celular: </label>
+                                <input type="number" name="numero_celular" class="form-control" id="numero_celular">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="estado_civil" class="col-form-label">Estado Civil: </label>
+                                <select name="estado_civil" class="form-control" id="estado_civil">
+                                    <option value="0" hidden>Seleccionar</option>
+                                    <option value="S">Soltero</option>
+                                    <option value="C">Casado</option>
+                                    <option value="V">Viudo</option>
+                                    <option value="D">Divorciado</option>
+                                    <option value="N">No especificar</option>
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="sexo" class="col-form-label">Sexo: </label>
+                                <select name="sexo" class="form-control" id="sexo">
+                                    <option value="0" hidden>Seleccionar</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Femenino</option>
+                                    <option value="N">No especificar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="id_departamento" class="col-form-label">Departamento: </label>
+                                <select name="id_departamento" class="form-control" id="id_departamento"
+                                    onchange="mostrarProvincias()">
+                                    <option value="0" hidden>Seleccionar</option>
+                                    {% for departamento in list_departamento%}
+                                    <option value="{{departamento.id}}">{{departamento.nombre_departamento}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="id_provincia" class="col-form-label">Provincia: </label>
+                                <select name="id_provincia" class="form-control" id="id_provincia"
+                                    onchange="mostrarDistritos()">
+                                    <option value="0" hidden>Seleccionar</option>
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="id_distrito" class="col-form-label">Distrito: </label>
+                                <select name="id_distrito" class="form-control" id="id_distrito" required>
+                                    <option value="0" hidden>Seleccionar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="direccion" class="col-form-label">Direccion: </label>
+                                <input type="text" name="direccion" class="form-control" id="direccion" required>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Agregar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}
+
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/direccion.js') }}"></script>
+{%endblock%}

@@ -1,0 +1,182 @@
+{% extends 'base/base-gerente.html'%} {% block content %}
+
+{%if factura%}
+<div class="card border-left-primary shadow h-100 ">
+    <div class="card-body">
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class=" font-weight-bold text-primary text-uppercase">
+                    Factura N° : {{factura.numero_factura}}
+                </div>
+            </div>
+            <div class="col-auto">
+                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+        </div>
+        <p>Fecha de Emision : {{factura.fecha_emision}} <br>
+            Pago: {{factura.tipo_moneda.nombre_moneda}} {{factura.total}} <br>
+            Cliente : {{factura.cliente.razon_social}} <br>
+            Observacion : {{factura.observacion}}
+        </p>
+    </div>
+</div>
+<br>
+{%endif%}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Guias de Remision </h5>
+            <a class="btn btn-outline-info" href="/factura"><i class="fa fa-file-invoice-dollar"></i> Facturas</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" onkeydown="buscarTabla()"
+                placeholder="Buscar Aqui...">
+            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-plus"></i>
+                Registrar Guias</button>
+        </div>
+
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="tableData">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha Inicio</th>
+                        <th>Factura</th>
+                        <th>Oficina</th>
+                        <th>Cliente</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if list_guia%}
+                    {%for guia in list_guia%}
+                    <tr>
+                        <td>{{guia.id}}</td>
+                        <td>{{guia.fecha_inicio.strftime('%Y-%m-%d')}}</td>
+                        <td>{{guia.factura.numero_factura}}</td>
+                        <td>{{guia.oficina.nombre_oficina}}</td>
+                        <td>{{guia.factura.cliente.razon_social}}</td>
+                        <td>
+                            <p>
+                                <button class="btn btn-warning mb-2" onclick="abrirModal('modalRegistrar')"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger mb-2"><i class="fas fa-trash-alt"></i></button>
+                                <a href="/descripcion-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
+                                    data-placement="left" title="Descripciones"> <i class="fa fa-list-alt"></i></a>
+                            </p>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="6" class="text-center">No hay datos disponibles</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Registrar Modal-->
+<div class="modal  fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Guia</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="fecha_inicio" class="col-form-label">Fecha de Inicio: </label>
+                                <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio">
+                            </div>
+                            <div class="col-md">
+                                <label for="punto_destino" class="col-form-label">Punto destino: </label>
+                                <input type="text" name="punto_destino" class="form-control" id="punto_destino">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="id_oficina" class="col-form-label">Oficina: </label>
+                                <select name="id_oficina" class="form-control" id="id_oficina">
+                                    <option value="" hidden>Seleccionar</option>
+                                    {%for oficina in oficinas%}
+                                    <option value="{{oficina.id}}">{{oficina.nombre_oficina}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="id_motivo_traslado" class="col-form-label">Motivo Traslado: </label>
+                                <select name="id_motivo_traslado" class="form-control" id="id_motivo_traslado">
+                                    <option value="" hidden>Seleccionar</option>
+                                    {%for motivo in motivos%}
+                                    <option value="{{motivo.id}}">{{motivo.nombre_motivo}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="id_factura" class="col-form-label">Factura: </label>
+                                {%if factura %}
+                                <input type="text" value="{{factura.numero_factura}}" class="form-control" readonly>
+                                {%else%}
+                                <select name="id_factura" class="form-control" id="id_factura">
+                                    <option value="" hidden>Seleccionar</option>
+                                    {%for factura in facturas%}
+                                    <option value="{{factura.id}}">{{factura.numero_factura}}</option>
+                                    {%endfor%}
+                                </select>
+                                {%endif%}
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="id_transportista" class="col-form-label">Transportista: </label>
+                                <select name="id_transportista" class="form-control" id="id_transportista">
+                                    <option value="" hidden>Seleccionar</option>
+                                    {%for transportista in transportistas%}
+                                    <option value="{{transportista.id}}">{{transportista.nombres}}
+                                        {{transportista.apellidos}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="id_vehiculo" class="col-form-label">Vehiculo: </label>
+                                <select name="id_vehiculo" class="form-control" id="id_vehiculo">
+                                    <option value="" hidden>Seleccionar</option>
+                                    {%for vehiculo in vehiculos%}
+                                    <option value="{{vehiculo.id}}">{{vehiculo.placa_vehiculo}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

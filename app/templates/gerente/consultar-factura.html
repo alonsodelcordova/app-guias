@@ -1,0 +1,54 @@
+{% extends 'base/base-gerente.html'%} {% block content %}
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Facturas </h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" onkeyup="buscarTabla()"
+                placeholder="Buscar Aqui...">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="tableData">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Factura</th>
+                        <th>Cliente</th>
+                        <th>Fecha Emision</th>
+                        <th>Monto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if list_factura%}
+                    {%for factura in list_factura%}
+                    <tr>
+                        <td>{{factura.id}}</td>
+                        <td>{{factura.numero_factura}}</td>
+                        <td>{{factura.cliente.razon_social}}</td>
+                        <td>{{factura.fecha_emision.strftime('%Y-%m-%d')}}</td>
+                        <td>{{factura.tipo_moneda.nombre_moneda}} : {{factura.total}}</td>
+                        <td>
+                            <a href="/consultar-guia/{{factura.id}}" class="btn btn-info mb-2"><i class="fas fa-wallet"></i> Guia</a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay datos disponibles</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

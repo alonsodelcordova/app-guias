@@ -1,0 +1,144 @@
+{% extends 'base/base-gerente.html'%}
+{% block content %}
+
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Pagina para Registrar Usuarios</h5>
+            <a class="btn btn-outline-info" href="/persona">
+                < Regresar</a>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center mb-2">
+                    <div class="col mr-2">
+                        <div class=" font-weight-bold text-primary text-uppercase">
+                            Datos Personales
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <strong>Nombre: {{persona.nombres}} {{persona.primer_apellido}}
+                            {{persona.segundo_apellido}}</strong>
+                    </div>
+                </div>
+                <p>Dni: {{persona.dni}} <br>
+                    Direccion: {{persona.direccion}} - {{persona.distrito.nombre_distrito}} -
+                    {{persona.distrito.provincia.nombre_provincia}} -
+                    {{persona.distrito.provincia.departamento.nombre_departamento}}
+                </p>
+            </div>
+        </div>
+
+        <hr>
+        <button class="btn btn-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-plus"></i> Registrar Usuario</button>
+        <hr>
+        <div class="row">
+            {% if persona.usuarios%}
+            {% for usuario in persona.usuarios%}
+            <div class="col-md-6 mb-2">
+                <div class="card border-left-success shadow">
+                    <div class="card-header">
+                        <strong>Usuario: {{usuario.usuario}}</strong>
+                    </div>
+                    <div class="card-body">
+                        Cargo: {{usuario.cargo.nombre_cargo}} <br>
+                        Oficina: {{usuario.oficina.nombre_oficina}} <br>
+
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-outline-success " href="/persona/{{usuario.id}}">Menus</a>
+                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            {%else%}
+            <h6 colspan="3" class="text-success">No se han encontrado usuarios registrados</h6>
+            {%endif%}
+        </div>
+
+    </div>
+</div>
+
+<!-- Registrar Modal-->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Usuario</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" id="form-user" onsubmit="addUser(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="id_cargo" class="col-form-label">Cargo: </label>
+                                <select name="id_cargo" class="form-control" id="id_cargo" required>
+                                    <option value="0" hidden>Seleccionar</option>
+                                    {% for cargo in list_cargo%}
+                                    <option value="{{cargo.id}}">{{cargo.nombre_cargo}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col-md">
+                                <label for="id_oficina" class="col-form-label">Oficina: </label>
+                                <select name="id_oficina" class="form-control" id="id_oficina" required>
+                                    <option value="0" hidden>Seleccionar</option>
+                                    {% for oficina in list_oficina%}
+                                    <option value="{{oficina.id}}">{{oficina.nombre_oficina}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="usuario" class="col-form-label">Nombre de Usuario: </label>
+                                <input type="text" name="usuario" class="form-control" id="usuario" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="password" class="col-form-label">Contraseña: </label>
+                                <input type="password" name="password" class="form-control" id="password" required>
+                            </div>
+                            <div class="col-md">
+                                <label for="password2" class="col-form-label">Confirma Contraseña: </label>
+                                <input type="password" name="password2" class="form-control" id="password2" required>
+                            </div>
+                        </div>
+                        <p class="text-danger" id="mesagge_error"></p>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 " >Agregar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+
+{%block scripts%}
+
+{%endblock%}

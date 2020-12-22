@@ -1,0 +1,80 @@
+{% extends 'base/base-gerente.html'%} {% block content %}
+
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Motivos de Traslados </h5>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-plus"></i> Registrar Factura</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% if list_motivo%}
+            {% for motivo in list_motivo%}
+            <div class="col-md-4 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center mb-2">
+                            <div class="col mr-2">
+                                <div class=" font-weight-bold text-primary text-uppercase">
+                                    {{motivo.nombre_motivo}}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-people-carry fa-2x text-black-50"></i>
+                            </div>
+                        </div>
+                        <p>Fecha de Registro : <span class="badge badge-secondary">{{motivo.fecha.strftime('%d-%m-%Y  %H:%M:%S')}}</span> </p>
+                        {{motivo.id}}
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            {%else%}
+            <h3>No se han encontrado Motivos de Traslados registrados</h3>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+<!-- Registrar Modal-->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Motivo de Traslado</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" id="form-user">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="nombre_motivo" class="col-form-label">Nombre Motivo: </label>
+                                <input type="text" name="nombre_motivo" class="form-control" id="nombre_motivo">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
