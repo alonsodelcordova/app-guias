@@ -36,6 +36,7 @@ def create_app(enviroment):
     #views
     from app.login import login as viewlogin
     app.register_blueprint(viewlogin)
+    
     from app.gerente import gerente as viewGerente
     app.register_blueprint(viewGerente)
 
