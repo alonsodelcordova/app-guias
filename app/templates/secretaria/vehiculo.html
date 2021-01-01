@@ -1,18 +1,21 @@
 {% extends 'base/base-gerente.html'%} {% block content %}
 
-
-
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Registrar Vehiculos </h5>
-            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-truck-moving"></i> Registrar Vehiculo</button>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalVehiculo','Registrar nuevo Vehiculo')"> <i
+                    class="fa fa-truck-moving"></i> Registrar Vehiculo</button>
         </div>
     </div>
     <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" onkeyup="buscarTabla()"
+                placeholder="Buscar Aqui...">
+        </div>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tableData">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -26,13 +29,15 @@
                     {%if list_vehiculo%}
                     {%for vehiculo in list_vehiculo%}
                     <tr>
-                        <td>{{vehiculo.id}}</td>
+                        <td>{{loop.index}}</td>
                         <td>{{vehiculo.marca_vehiculo}}</td>
                         <td>{{vehiculo.modelo_vehiculo}}</td>
                         <td>{{vehiculo.placa_vehiculo}}</td>
                         <td>
-                            <button class="btn btn-warning "><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                            <button class="btn btn-warning " onclick="editarVehiculo({{vehiculo.id}})"><i
+                                    class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger " onclick="eliminarVehiculo({{vehiculo.id}})"><i
+                                    class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                     {%endfor%}
@@ -44,40 +49,45 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
 
 <!-- Registrar Modal-->
-<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modalVehiculo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Vehiculo</h5>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" id="form-user">
+            <form method="POST" id="form">
+                <input type="hidden" name="id" id="id" value="">
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-md">
                                 <label for="marca_vehiculo" class="col-form-label">Marca: </label>
-                                <input type="text" name="marca_vehiculo" class="form-control" id="marca_vehiculo" maxlength="30" autofocus required>
+                                <input type="text" name="marca_vehiculo" class="form-control" id="marca_vehiculo"
+                                    maxlength="30" autofocus required>
                             </div>
                             <div class="col-md">
                                 <label for="modelo_vehiculo" class="col-form-label">Modelo: </label>
-                                <input type="text" name="modelo_vehiculo" class="form-control" id="modelo_vehiculo" maxlength="15" required>
+                                <input type="text" name="modelo_vehiculo" class="form-control" id="modelo_vehiculo"
+                                    maxlength="15" required>
                             </div>
-                            
+
                         </div>
                         <div class="row">
                             <div class="col-md">
                                 <label for="placa_vehiculo" class="col-form-label">Placa: </label>
-                                <input type="text" name="placa_vehiculo" class="form-control" id="placa_vehiculo" maxlength="15" required>
+                                <input type="text" name="placa_vehiculo" class="form-control" id="placa_vehiculo"
+                                    maxlength="15" required>
                             </div>
-                            
+
                         </div>
                     </div>
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -92,4 +102,7 @@
     </div>
 </div>
 
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/secretaria/vehiculo.js') }}"></script>
 {%endblock%}

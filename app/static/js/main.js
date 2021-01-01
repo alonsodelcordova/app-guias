@@ -4,6 +4,9 @@ $(document).ready(function () {
     }, 3000);
 });
 
+window.onload = function(){
+    $("#pre-loader").fadeOut();
+}
 
 function messageSweet(icon, title, text) {
     Swal.fire({
@@ -12,8 +15,17 @@ function messageSweet(icon, title, text) {
         text: text
     });
 }
-
-function eliminarSweet(title, message, btn_msg, url) {
+function cargando(titulo){
+    Swal.fire({
+      title: titulo,
+      html: 'Espere un momento por favor...',
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    });
+}
+function eliminarSweet(title, message, btn_msg,id) {
     Swal.fire({
         title: title,
         text: message,
@@ -25,12 +37,18 @@ function eliminarSweet(title, message, btn_msg, url) {
         confirmButtonText: btn_msg
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = url;
+            eliminarDato(id);
         }
     })
 }
-function abrirModal(nombre) {
+function abrirModal(nombre,titulo) {
+    limpiarDatos();
+    $("#id").val("");
+    $("#exampleModalLabel").html(titulo);
     $("#" + nombre).modal("show");
+}
+function limpiarDatos(){
+    $("#form")[0].reset();
 }
 
 function addUser(elem) {
@@ -38,13 +56,26 @@ function addUser(elem) {
     if ($("#password").val() == $("#password2").val()) {
         elem.target.submit();
     } else {
-        console.log("contraseñas flasea")
+
         $("#password").focus();
     }
 }
 
 function cerrar_session() {
-    eliminarSweet("Cerrar Session", "¿Realmente quiere salir?", "Cerrar Session", '/logout');
+    Swal.fire({
+        title: "Cerrar Sesion",
+        text: "¿Estás seguro de cerrar session?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Cerrar Session'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = "/logout"
+        }
+    })
 }
 
 function imprimir(id) {

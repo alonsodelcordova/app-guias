@@ -17,7 +17,7 @@ class Departamento(db.Model):
             'id': self.id,
             'nombre': self.nombre_departamento,
             'fecha':self.fecha.strftime('%Y-%m-%d'),
-            'provincias': [(row.to_json()) for row in self.provincias]
+            #'provincias': [(row.to_json()) for row in self.provincias]
         }
         return dict
 

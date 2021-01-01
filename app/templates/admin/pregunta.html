@@ -1,0 +1,112 @@
+{% extends 'base/base-gerente.html'%}
+{% block content %}
+<!-- Registrar Oficina-->
+<div class="modal fade" id="modalRespuesta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" id="form">
+                <div class="modal-body">
+                    <input type="hidden" id="id" name="id" value="">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="nombre" class="col-form-label">Nombre: </label>
+                                <input type="text" name="nombre" class="form-control" id="nombre" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="id_usuario" class="col-form-label">usuario: </label>
+                                <select name="id_usuario" class="form-control" id="id_usuario">
+                                    <option value="0" hidden>Seleccionar</option>
+                                    {% for usuario in list_usuario%}
+                                    <option value="{{usuario.id}}">{{usuario.usuario}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="direccion" class="col-form-label">Direccion: </label>
+                                <input type="text" name="direccion" class="form-control" id="direccion" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-info mr-3 "
+                        onsubmit="cargando('Registrando Provincia!!')">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Lista de Preguntas</h5>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalRespuesta','Registrar nueva Oficina')"> 
+                <i class="fa fa-plus"></i> Agregar Respuesta
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Usuario</th>
+                        <th>Pregunta</th>
+                        <th>Respuesta</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if preguntas%}
+                    {%for pregunta in preguntas%}
+                    <tr>
+                        <td>{{pregunta.id}}</td>
+                        <td>{{pregunta.usuario.usuario}}</td>
+                        <td>{{pregunta.pregunta}}</td>
+                        <td>{{pregunta.respuesta}}</td>
+                        <td>
+                            <button class="btn btn-warning " onclick="editarOficina({{oficina.id}})"
+                                data-toggle="tooltip" data-placement="top" title="Editar"><i
+                                    class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger " onclick="eliminarOficina({{oficina.id}})"
+                                data-toggle="tooltip" data-placement="top" title="Eliminar"><i
+                                    class="fas fa-trash-alt"></i></button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay datos disponibles</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/admin/oficina.js') }}"></script>
+{%endblock%}

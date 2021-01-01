@@ -15,6 +15,15 @@ class Vehiculo(db.Model):
         self.modelo_vehiculo=form.get("modelo_vehiculo")
         self.placa_vehiculo=form.get("placa_vehiculo")
 
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'marca_vehiculo':self.marca_vehiculo,
+            'modelo_vehiculo':self.modelo_vehiculo,
+            'placa_vehiculo':self.placa_vehiculo,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_vehiculo(self):
         try:

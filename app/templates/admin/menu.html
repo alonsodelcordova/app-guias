@@ -3,6 +3,9 @@
 
 {%if cargo%}
 <div class="card border-left-primary shadow h-100 ">
+    <div class="card-header">
+        <a href="/cargo"><i class="fas fa-chevron-left"></i>Regresar</a>
+    </div>
     <div class="card-body">
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
@@ -33,7 +36,8 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST"  >
+            <form method="POST"  id="form">
+                <input type="hidden" id="id" name="id" value="">
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="form-row">
@@ -44,7 +48,8 @@
                             <div class="col-md">
                                 <label for="id_cargo" class="col-form-label">Cargo: </label>
                                 {%if cargo%}
-                                <input type="text" class="form-control" id="id_cargo" value="{{cargo.nombre_cargo}}" readonly>
+                                <input type="text" id="label-cargo" class="form-control"  value="{{cargo.nombre_cargo}}" readonly>
+                                <input type="hidden" name="id_cargo" id="id_cargo" value="{{cargo.id}}">
                                 {%else%}
                                 <select name="id_cargo" class="form-control" id="id_cargo">
                                     <option value="0" hidden>Seleccionar</option>
@@ -73,7 +78,7 @@
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Lista de Menus</h5>
-            <button class="btn btn-outline-info" onclick="abrirModal('modalMenu')"> <i class="fa fa-plus"></i> Agregar Menu</button>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalMenu','Registrar nuevo Menu')"> <i class="fa fa-plus"></i> Agregar Menu</button>
         </div>
     </div>
     <div class="card-body">
@@ -101,8 +106,8 @@
                         <br>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-outline-warning " onclick="editarMenu({{menu.id}})" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger " onclick="eliminarMenu({{menu.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                         <a class="btn btn-outline-success " href="/link/{{menu.id}}">Link</a>
                     </div>
                 </div>
@@ -112,4 +117,7 @@
     </div>
 </div>
 
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/admin/menu.js') }}"></script>
 {%endblock%}

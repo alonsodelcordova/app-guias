@@ -13,7 +13,6 @@ class Distrito(db.Model):
 
     def __init__(self, form):
         self.nombre_distrito=form.get("nombre")
-        self.id_provincia=form.get("id_provincia")
 
     def to_json(self):
         dict={
@@ -33,15 +32,20 @@ class Distrito(db.Model):
             return False
 
     def update_distrito(self, form):
-        self.nombre_distrito=form.get("nombre")
-        self.id_provincia=form.get("id_provincia")
-        db.session.commit()
-        return True
+        try:
+            self.nombre_distrito=form.get("nombre")
+            db.session.commit()
+            return True
+        except:
+            return False
 
     def delete_distrito(self):
-        db.session.delete(self)
-        db.session.commit()
-        return True
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 
 

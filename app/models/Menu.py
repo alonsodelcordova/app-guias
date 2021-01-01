@@ -8,12 +8,21 @@ class Menu(db.Model):
     nombre_menu = db.Column(db.String(50), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
     estado = db.Column(db.String(1),default='A', nullable=False)
-    links = db.relationship('Link') 
+    links = db.relationship('Link',cascade="all, delete") 
     cargo = db.relationship('Cargo', backref='menu')
 
     def __init__(self, form):
         self.nombre_menu=form.get("nombre_menu")
         self.id_cargo=form.get("id_cargo")
+    
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'nombre':self.nombre_menu,
+            'id_cargo':self.id_cargo,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_menu(self):
         try:
@@ -24,15 +33,21 @@ class Menu(db.Model):
             return False
 
     def update_menu(self, form):
-        self.nombre_menu=form.get("nombre_menu")
-        self.id_cargo=form.get("id_cargo")
-        db.session.commit()
-        return True
+        try:
+            self.nombre_menu=form.get("nombre_menu")
+            self.id_cargo=form.get("id_cargo")
+            db.session.commit()
+            return True
+        except:
+            return False
 
     def delete_menu(self):
-        db.session.delete(self)
-        db.session.commit()
-        return True
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 
 

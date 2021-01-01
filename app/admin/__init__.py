@@ -4,7 +4,6 @@ from flask import session, request, url_for, redirect,g
 admin=Blueprint('admin', __name__)
 api_admin = Blueprint('api_admin', __name__,url_prefix='/api')
 
-@api_admin.before_request
 @admin.before_request
 def before_request():
     if "usuario" in session :

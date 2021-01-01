@@ -1,77 +1,94 @@
-{% extends 'base/base-gerente.html'%} 
+{% extends 'base/base-gerente.html'%}
 {% block content %}
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header">
-            <div class="d-sm-flex align-items-center justify-content-between">
-                <h5 class="font-weight-bold text-primary">Tipos de Monedas</h5>
+<!-- Registrar Moneda-->
+<div class="modal fade" id="modalMoneda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Nuevo Tipo de Moneda</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-        </div>
-        <div class="card-body">
-            <form method="POST">
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md">
-                            <label for="nombre" class="col-form-label">Nombre: </label>
-                            <input type="text" name="nombre" class="form-control" id="nombre">
-                        </div>
-                        <div class="col-md">
-                            <label for="prefijo" class="col-form-label">Prefijo: </label>
-                            <input type="text" name="prefijo" class="form-control" id="prefijo">
+            <form method="POST" id="form">
+                <div class="card-body">
+                    <input type="hidden" id="id" name="id" value="">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="nombre" class="col-form-label">Nombre: </label>
+                                <input type="text" name="nombre" class="form-control" id="nombre" required autofocus maxlength="20">
+                            </div>
+                            <div class="col-md">
+                                <label for="prefijo" class="col-form-label">Prefijo: </label>
+                                <input type="text" name="prefijo" class="form-control" id="prefijo" required maxlength="3">
+                            </div>
                         </div>
                     </div>
+                    <br>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 </div>
-                <br>
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                <div class="form-group">
-                    <div class="col-md">
-                        <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 " >Agregar</button>
-                        <button type="reset"  class="btn btn-outline-danger">Limpiar</button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
+</div>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header">
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        
+        <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Lista de Monedas</h5>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Prefijo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%if list_moneda%}
-                            {%for moneda in list_moneda%}
-                            <tr>
-                                <td>{{moneda.id}}</td>
-                                <td>{{moneda.nombre_moneda}}</td>
-                                <td>{{moneda.prefijo}}</td>
-                                <td>
-                                    <button class="btn btn-warning " ><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-danger " ><i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                            {%endfor%}
-                        {%else%}
-                            <tr>
-                                <td colspan="4" class="text-center">No hay datos disponibles</td>
-                            </tr>
-                        {%endif%}
-                    </tbody>
-                </table>
+            <div class="col-auto">
+                <button class="btn btn-outline-info" onclick="abrirModal('modalMoneda','Registrar nueva moneda')"> <i class="fa fa-plus"></i>
+                    Agregar Moneda</button>
             </div>
         </div>
     </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Prefijo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%if list_moneda%}
+                    {%for moneda in list_moneda%}
+                    <tr>
+                        <td>{{moneda.id}}</td>
+                        <td>{{moneda.nombre_moneda}}</td>
+                        <td>{{moneda.prefijo}}</td>
+                        <td>
+                            <button class="btn btn-warning " onclick="editarMoneda({{moneda.id}})" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger " onclick="eliminarMoneda({{moneda.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash-alt" ></i></button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="4" class="text-center">No hay datos disponibles</td>
+                    </tr>
+                    {%endif%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/admin/tipo-moneda.js') }}"></script>
 {%endblock%}

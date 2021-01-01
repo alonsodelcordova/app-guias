@@ -20,6 +20,17 @@ class Transportista(db.Model):
         self.apellidos=form.get("apellidos")
         self.numero_licencia=form.get("numero_licencia")
 
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'ruc':self.ruc,
+            'denominacion':self.denominacion,
+            'nombres':self.nombres,
+            'apellidos':self.apellidos,
+            'numero_licencia':self.numero_licencia,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_transportista(self):
         try:

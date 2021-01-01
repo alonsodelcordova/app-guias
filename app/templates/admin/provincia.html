@@ -1,41 +1,70 @@
 {% extends 'base/base-gerente.html'%}
 {% block content %}
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
+
+<div class="card border-left-primary shadow h-100 ">
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
-            <h5 class="font-weight-bold text-primary">Agregar Provincias</h5>
+            <h5 class="font-weight-bold text-primary"></h5>
             <a href="/departamento"><i class="fas fa-chevron-left"></i> Regresar</a>
         </div>
     </div>
     <div class="card-body">
-        <h4>Departamento: {{departamento.nombre_departamento}}</h4>
-        <form method="POST">
-            <input type="hidden" name="id_departamento" value="{{departamento.id}}">
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md">
-                        <label for="nombre" class="col-form-label">Nombre: </label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" autofocus>
-                    </div>
+        <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class=" font-weight-bold text-primary text-uppercase">
+                    Departamento : {{departamento.nombre_departamento}}
                 </div>
             </div>
-            <br>
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <div class="form-group">
-                <div class="col-md">
-                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Agregar</button>
-                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
-                </div>
+            <div class="col-auto">
+                <i class="fas fa-map-marker-alt fa-2x text-black-50"></i>
             </div>
-        </form>
+        </div>
     </div>
 </div>
+<br>
+<!-- Registrar Provincia-->
+<div class="modal fade" id="modalProvincia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" id="form">
+                <div class="modal-body">
+                    <input type="hidden" id="id" name="id" value="">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="nombre" class="col-form-label">Nombre: </label>
+                                <input type="text" name="nombre" class="form-control" id="nombre" autofocus>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-info mr-3 "
+                        onsubmit="cargando('Registrando Provincia!!')">Registrar</button>
+                    <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header">
-        <h5 class="font-weight-bold text-primary">Lista de Provincias</h5>
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Lista de Provincias</h5>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalProvincia','Registrar nueva Provincia')"> <i class="fa fa-plus"></i> Agregar Provincia</button>
+        </div>
     </div>
     <div class="card-body">
         <div class="row">
@@ -74,8 +103,10 @@
                         {%endif%}
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-outline-warning " onclick="editarProvincia({{provincia.id}})" data-toggle="tooltip" data-placement="top" title="Editar"><i
+                                class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger " onclick="eliminarProvincia({{provincia.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i
+                                class="fas fa-trash-alt"></i></button>
                         <a class="btn btn-outline-success " href="/distrito/{{provincia.id}}">Distritos</a>
                     </div>
                 </div>
@@ -89,4 +120,7 @@
 </div>
 
 
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/admin/provincia.js') }}"></script>
 {%endblock%}

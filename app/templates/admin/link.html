@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="col-auto">
-                <a href="/menu" class="btn btn-outline-info"><i class="fas fa-chevron-left"></i> Regresar</a>
+                <a href="/menu/{{menu.id_cargo}}" class="btn btn-outline-info"><i class="fas fa-chevron-left"></i> Regresar</a>
             </div>
         </div>
         <p>Nombre: {{menu.nombre_menu}} <br>
@@ -31,18 +31,19 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST">
+            <form method="POST" id="form">
                 <div class="modal-body">
                     <input type="hidden" name="id_menu" value="{{menu.id}}">
+                    <input type="hidden" name="id" id="id" value="">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md">
                                 <label for="nombre" class="col-form-label">Nombre: </label>
-                                <input type="text" name="nombre" class="form-control" id="nombre">
+                                <input type="text" name="nombre" class="form-control" id="nombre" required autofocus >
                             </div>
                             <div class="col-md">
                                 <label for="link" class="col-form-label">Link: </label>
-                                <input type="text" name="link" class="form-control" id="link">
+                                <input type="text" name="link" class="form-control" id="link" required>
                             </div>
                         </div>
                     </div>
@@ -65,7 +66,7 @@
         <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Lista de Links</h5>
             <div class="col-auto">
-                <button class="btn btn-outline-info" onclick="abrirModal('modalLink')"> <i class="fa fa-plus"></i>
+                <button class="btn btn-outline-info" onclick="abrirModal('modalLink','Registrar nuevo Link')"> <i class="fa fa-plus"></i>
                     Agregar Link</button>
             </div>
         </div>
@@ -89,8 +90,8 @@
                         <td>{{link.nombre_link}}</td>
                         <td>{{link.link}}</td>
                         <td>
-                            <button class="btn btn-warning " onclick="editarLink({{link.id}})"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger " onclick="eliminarLink({{link.id}})"><i
+                            <button class="btn btn-warning " onclick="editarLink({{link.id}})" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger " onclick="eliminarLink({{link.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i
                                     class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>

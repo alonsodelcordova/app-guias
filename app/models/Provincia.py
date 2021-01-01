@@ -13,7 +13,6 @@ class Provincia(db.Model):
 
     def __init__(self, form):
         self.nombre_provincia=form.get("nombre")
-        self.id_departamento=form.get("id_departamento")
 
     def to_json(self):
         dict={
@@ -21,7 +20,7 @@ class Provincia(db.Model):
             'id_departamento':self.id_departamento,
             'nombre':self.nombre_provincia,
             'fecha':self.fecha.strftime('%Y-%m-%d'),
-            'distritos':[(row.to_json()) for row in self.distritos]
+            #'distritos':[(row.to_json()) for row in self.distritos]
         }
         return dict
 
@@ -34,15 +33,20 @@ class Provincia(db.Model):
             return False
 
     def update_provincia(self, form):
-        self.nombre_provincia=form.get("nombre")
-        self.id_departamento=form.get("id_departamento")
-        db.session.commit()
-        return True
+        try:
+            self.nombre_provincia=form.get("nombre")
+            db.session.commit()
+            return True
+        except:
+            return False
 
     def delete_provincia(self):
-        db.session.delete(self)
-        db.session.commit()
-        return True
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 
 

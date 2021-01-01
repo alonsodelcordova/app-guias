@@ -5,3 +5,61 @@ body {
 #div-imprimir{
     font-size: 100%!important;
 }
+
+
+.pre-loader{
+    position: fixed;
+    background: green;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.loader{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+.loader span{
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    animation: agro 2s ease-in-out infinite;
+}
+.loader span:nth-child(1){
+    left: -4.5em;
+    animation-delay: 0s;
+}
+.loader span:nth-child(2){
+    left: -1.5em;
+    animation-delay: 0.1s;
+}
+.loader span:nth-child(3){
+    left: 1.5em;
+    animation-delay: 0.2s;
+}
+
+.loader span:nth-child(4){
+    left: 4.5em;
+    animation-delay: 0.3s;
+}
+
+@keyframes agro{
+    0%,75%,100%{
+        transform:translateY(0) scale(1);
+
+    }
+    25%{
+    transform: translateY(2.5em);
+    }
+    50%{
+        transform: translateY(-2.5em) scale(1.1);
+    }
+}

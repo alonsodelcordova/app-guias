@@ -17,8 +17,19 @@ class DescripcionGuia(db.Model):
         self.descripcion=form.get("descripcion")
         self.cantidad=form.get("cantidad")
         self.unidad_medida=form.get("unidad_medida")
-        self.id_guia_remision=form.get("id_guia_remision")
         self.peso= float(form.get("cantidad")) * float(form.get("unidad_medida"))
+    
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'descripcion':self.descripcion,
+            'cantidad':self.cantidad,
+            'unidad_medida':self.unidad_medida,
+            'id_guia_remision':self.id_guia_remision,
+            'peso':self.peso,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_descripcion(self):
         try:
@@ -29,15 +40,20 @@ class DescripcionGuia(db.Model):
             return False
 
     def update_descripcion(self, form):
-        self.descripcion=form.get("descripcion")
-        self.cantidad=form.get("cantidad")
-        self.unidad_medida=form.get("unidad_medida")
-        self.id_guia_remision=form.get("id_guia_remision")
-        self.peso=self.cantidad * self.unidad_medida
-        db.session.commit()
-        return True
+        try:
+            self.descripcion=form.get("descripcion")
+            self.cantidad=form.get("cantidad")
+            self.unidad_medida=form.get("unidad_medida")
+            self.peso= float(form.get("cantidad")) * float(form.get("unidad_medida"))
+            db.session.commit()
+            return True
+        except:
+            return False
 
     def delete_descripcion(self):
-        db.session.delete(self)
-        db.session.commit()
-        return True
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False

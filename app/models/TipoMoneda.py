@@ -12,6 +12,15 @@ class TipoMoneda(db.Model):
     def __init__(self, form):
         self.nombre_moneda=form.get("nombre")
         self.prefijo=form.get("prefijo")
+    
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'nombre':self.nombre_moneda,
+            'prefijo':self.prefijo,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_moneda(self):
         try:

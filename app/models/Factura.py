@@ -23,6 +23,18 @@ class Factura(db.Model):
         self.fecha_emision=form.get("fecha_emision")
         self.observacion=form.get("observacion")
         self.total=form.get("total")
+    
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'numero_factura':self.numero_factura,
+            'id_cliente':self.id_cliente,
+            'id_tipo_moneda':self.id_tipo_moneda,
+            'observacion':self.observacion,
+            'total':self.total,
+            'fecha_emision':self.fecha_emision.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_factura(self):
         try:
@@ -36,7 +48,7 @@ class Factura(db.Model):
         try:
             self.numero_factura=form.get("numero_factura")
             self.id_cliente=form.get("id_cliente")
-            self.id_tipo_moneda=form.get("numero_documento")
+            self.id_tipo_moneda=form.get("tipo_moneda")
             self.fecha_emision=form.get("fecha_emision")
             self.observacion=form.get("observacion")
             self.total=form.get("total")

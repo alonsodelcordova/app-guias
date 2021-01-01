@@ -7,12 +7,16 @@
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Trasportistas Registrados </h5>
-            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-id-card"></i> Registrar Transportista</button>
+            <button class="btn btn-outline-info" onclick="abrirModal('modalTransportista','Registrar Transportista')"> <i class="fa fa-id-card"></i> Registrar Transportista</button>
         </div>
     </div>
     <div class="card-body">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" onkeyup="buscarTabla()"
+                placeholder="Buscar Aqui...">
+        </div>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tableData">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -27,14 +31,14 @@
                     {%if list_transportista%}
                     {%for transportista in list_transportista%}
                     <tr>
-                        <td>{{transportista.id}}</td>
+                        <td>{{loop.index}}</td>
                         <td>{{transportista.ruc}}</td>
                         <td>{{transportista.denominacion}}</td>
                         <td>{{transportista.nombres}} {{transportista.apellidos}}</td>
                         <td>{{transportista.numero_licencia}}</td>
                         <td>
-                            <button class="btn btn-warning "><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger "><i class="fas fa-trash-alt"></i></button>
+                            <button class="btn btn-warning " onclick="editarTransportista({{transportista.id}})"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger "  onclick="eliminarTransportista({{transportista.id}})"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     </tr>
                     {%endfor%}
@@ -50,17 +54,18 @@
 </div>
 
 <!-- Registrar Modal-->
-<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modalTransportista" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Transportista</h5>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" id="form-user">
+            <form method="POST" id="form">
+                <input type="hidden" name="id" id="id" value="">
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="row">
@@ -104,4 +109,7 @@
     </div>
 </div>
 
+{%endblock%}
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/secretaria/transportista.js') }}"></script>
 {%endblock%}

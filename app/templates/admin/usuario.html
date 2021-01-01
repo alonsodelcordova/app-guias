@@ -41,7 +41,7 @@
         </div>
 
         <hr>
-        <button class="btn btn-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-plus"></i> Registrar Usuario</button>
+        <button class="btn btn-info" onclick="abrirModal('modalUsuario','Registrar Usuario')"> <i class="fa fa-plus"></i> Registrar Usuario</button>
         <hr>
         <div class="row">
             {% if persona.usuarios%}
@@ -57,9 +57,8 @@
 
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-outline-success " href="/persona/{{usuario.id}}">Menus</a>
-                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-outline-warning " onclick="editarUsuario({{usuario.id}})" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger " onclick="eliminarUsuario({{usuario.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </div>
             </div>
@@ -73,17 +72,18 @@
 </div>
 
 <!-- Registrar Modal-->
-<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modalUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form method="POST" id="form-user" onsubmit="addUser(event)">
+            <form method="POST" id="form" onsubmit="addUser(event)">
+                <input type="hidden" id="id" name="id" value="">
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="form-row">
@@ -140,5 +140,5 @@
 {%endblock%}
 
 {%block scripts%}
-
+<script src="{{ url_for('static',filename='js/admin/usuario.js') }}"></script>
 {%endblock%}

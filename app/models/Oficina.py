@@ -17,6 +17,18 @@ class Oficina(db.Model):
         self.direccion=form.get("direccion")
         self.id_distrito=form.get("id_distrito")
 
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'nombre':self.nombre_oficina,
+            'direccion':self.direccion,
+            'id_distrito':self.id_distrito,
+            'id_provincia':self.distrito.id_provincia,
+            'id_departamento':self.distrito.provincia.id_departamento,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
+
     def save_oficina(self):
         try:
             db.session.add(self)
@@ -26,16 +38,22 @@ class Oficina(db.Model):
             return False
 
     def update_oficina(self, form):
-        self.nombre_oficina=form.get("nombre")
-        self.direccion=form.get("direccion")
-        self.id_distrito=form.get("id_distrito")
-        db.session.commit()
-        return True
+        try:
+            self.nombre_oficina=form.get("nombre")
+            self.direccion=form.get("direccion")
+            self.id_distrito=form.get("id_distrito")
+            db.session.commit()
+            return True
+        except:
+            return False
 
     def delete_oficina(self):
-        db.session.delete(self)
-        db.session.commit()
-        return True
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 
 

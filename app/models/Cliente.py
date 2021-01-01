@@ -16,6 +16,17 @@ class Cliente(db.Model):
         self.tipo_documento=form.get("tipo_documento")
         self.numero_documento=form.get("numero_documento")
         self.direccion=form.get("direccion")
+    
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'razon_social':self.razon_social,
+            'tipo_documento':self.tipo_documento,
+            'numero_documento':self.numero_documento,
+            'direccion':self.direccion,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
 
     def save_cliente(self):

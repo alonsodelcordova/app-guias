@@ -1,36 +1,51 @@
 {% extends 'base/base-gerente.html'%} {% block content %}
 
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header">
-        <h5 class="font-weight-bold text-primary">Crear Departamentos</h5>
-    </div>
-    <div class="card-body">
-        <form method="POST">
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col-md">
-                        <label for="nombre" class="col-form-label">Nombre: </label>
-                        <input type="text" name="nombre" class="form-control" id="nombre" onfocus>
+<!-- Registrar Departamento-->
+<div class="modal fade" id="modalDepartamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form method="POST" id="form">
+                <input type="hidden" id="id" name="id" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="nombre" class="col-form-label">Nombre: </label>
+                                <input type="text" name="nombre" class="form-control" id="nombre" onfocus>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <div class="form-group">
-                <div class="col-md">
-                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Agregar</button>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-info mr-3 " onsubmit="cargando('Registrando Cargo!!')">Registrar</button>
                     <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+                    <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header">
-        <h5 class="font-weight-bold text-primary">Lista de Departamentos</h5>
+        
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Lista de Departamentos</h5>
+            <div class="col-auto">
+                <button class="btn btn-outline-info" onclick="abrirModal('modalDepartamento','Registrar nuevo Departamento')"> <i class="fa fa-plus"></i>
+                    Agregar Departamento</button>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <div class="row">
@@ -69,9 +84,9 @@
                         {%endif%}
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-outline-warning "><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-outline-danger "><i class="fas fa-trash-alt"></i></button>
-                        <a class="btn btn-outline-success " href="/provincia/{{departamento.id}}">Provincias</a>
+                        <button class="btn btn-outline-warning " onclick="editarDepartamento({{departamento.id}})"  data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger " onclick="eliminarDepartamento({{departamento.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
+                        <a class="btn btn-outline-success " href="/provincia/{{departamento.id}}" >Provincias</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +99,6 @@
 </div>
 
 {%endblock%}
-
 {%block scripts%}
-
+<script src="{{ url_for('static',filename='js/admin/departamento.js') }}"></script>
 {%endblock%}

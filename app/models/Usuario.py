@@ -15,6 +15,7 @@ class Usuario(db.Model):
     estado = db.Column(db.String(1),default='A', nullable=False)
 
     guias = db.relationship('GuiaRemision') 
+    preguntas = db.relationship('Pregunta') 
     cargo = db.relationship('Cargo', backref='usuario')
     oficina = db.relationship('Oficina', backref='usuario')
     persona = db.relationship('Persona', backref='usuario')
@@ -54,10 +55,12 @@ class Usuario(db.Model):
         self.usuario = form.get("usuario")
         self.id_cargo = form.get("id_cargo")
         self.id_oficina = form.get("id_oficina")
-        self.password = self.__create_password(form.get("password"))
         db.session.commit()
         return True
-
+        
+    def update_password(self,password):
+        self.password=self.__create_password(password)
+    
     def delete_usuario(self):
         db.session.delete(self)
         db.session.commit()

@@ -1,0 +1,59 @@
+{% extends 'base/base-gerente.html'%}
+{% block content %}
+<div class="card border-left-primary shadow w-75">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                {% if usuario.persona.sexo == "F" %}
+                <img src="{{ url_for('static',filename='img/secretaria.jpg') }}" class="w-100" alt="logo-user">
+                {%else%}
+                <img src="{{ url_for('static',filename='img/capataz.jpg') }}" class="w-100" alt="logo-user">
+                {%endif%}
+                <br><br>
+
+                <a href="/editar-user" class="btn btn-outline-primary"> <i class="fas fa-edit"></i> Editar Perfil</a>
+            </div>
+            <div class="col-md">
+                <div class="row">
+                    <div class="col">
+                        <div class=" font-weight-bold text-primary text-uppercase">
+                            Datos Personales
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col">
+                        <h4><strong>{{usuario.persona.nombres}} {{usuario.persona.primer_apellido}} {{usuario.persona.segundo_apellido}}</strong></h4>
+                        <strong>DNI:</strong>  {{usuario.persona.dni}} <br>
+                        <strong>Celular: </strong> {{usuario.persona.numero_celular}} <br>
+                        <strong>Direccion:</strong>  {{usuario.persona.direccion}} - {{usuario.persona.distrito.nombre_distrito}} - {{usuario.persona.distrito.provincia.nombre_provincia}} - {{usuario.persona.distrito.provincia.departamento.nombre_departamento}} <br>
+                    </div>
+                    
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class=" font-weight-bold text-primary text-uppercase">
+                            Perfil del usuario
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h4><strong>{{usuario.cargo.nombre_cargo}} </strong></h4>
+                        <p>Oficina: {{usuario.oficina.nombre_oficina}} <br>
+                            Usuario: {{usuario.usuario}}
+                        </p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+{%endblock%}

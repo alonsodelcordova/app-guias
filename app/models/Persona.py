@@ -30,6 +30,25 @@ class Persona(db.Model):
         self.numero_celular=form.get("numero_celular")
         self.email=form.get("email")
         self.direccion=form.get("direccion")
+    
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'nombres':self.nombres,
+            'dni':self.dni,
+            'id_distrito':self.id_distrito,
+            'id_provincia':self.distrito.id_provincia,
+            'id_departamento':self.distrito.provincia.id_departamento,
+            'primer_apellido':self.primer_apellido,
+            'segundo_apellido':self.segundo_apellido,
+            'estado_civil':self.estado_civil,
+            'sexo':self.sexo,
+            'numero_celular':self.numero_celular,
+            'direccion':self.direccion,
+            'email':self.email,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_persona(self):
         try:
@@ -40,23 +59,29 @@ class Persona(db.Model):
             return False
 
     def update_persona(self, form):
-        self.dni=form.get("dni")
-        self.nombres=form.get("nombres")
-        self.id_distrito=form.get("id_distrito")
-        self.primer_apellido=form.get("primer_apellido")
-        self.segundo_apellido=form.get("segundo_apellido")
-        self.estado_civil=form.get("estado_civil")
-        self.sexo=form.get("sexo")
-        self.numero_celular=form.get("numero_celular")
-        self.email=form.get("email")
-        self.direccion=form.get("direccion")
-        db.session.commit()
-        return True
+        try:
+            self.dni=form.get("dni")
+            self.nombres=form.get("nombres")
+            self.id_distrito=form.get("id_distrito")
+            self.primer_apellido=form.get("primer_apellido")
+            self.segundo_apellido=form.get("segundo_apellido")
+            self.estado_civil=form.get("estado_civil")
+            self.sexo=form.get("sexo")
+            self.numero_celular=form.get("numero_celular")
+            self.email=form.get("email")
+            self.direccion=form.get("direccion")
+            db.session.commit()
+            return True
+        except:
+            return False
 
     def delete_persona(self):
-        db.session.delete(self)
-        db.session.commit()
-        return True
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False
 
 
 

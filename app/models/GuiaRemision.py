@@ -26,7 +26,6 @@ class GuiaRemision(db.Model):
     def __init__(self, form):
         self.fecha_inicio=form.get("fecha_inicio")
         self.id_oficina=form.get("id_oficina")
-        self.id_usuario=form.get("id_usuario")
         self.id_factura=form.get("id_factura")
         self.id_transportista=form.get("id_transportista")
         self.id_vehiculo=form.get("id_vehiculo")
@@ -34,6 +33,20 @@ class GuiaRemision(db.Model):
         self.direccion=form.get("direccion")
         self.punto_destino=form.get("punto_destino") 
 
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'id_oficina':self.id_oficina,
+            'id_usuario':self.id_usuario,
+            'id_factura':self.id_factura,
+            'id_transportista':self.id_transportista,
+            'id_vehiculo':self.id_vehiculo,
+            'id_motivo_traslado':self.id_motivo_traslado,
+            'direccion':self.direccion,
+            'punto_destino':self.punto_destino,
+            'fecha_inicio':self.fecha_inicio.strftime('%Y-%m-%d')
+        }
+        return dict
 
     def save_guia(self):
         try:
@@ -47,7 +60,6 @@ class GuiaRemision(db.Model):
         try:
             self.fecha_inicio=form.get("fecha_inicio")
             self.id_oficina=form.get("id_oficina")
-            self.id_usuario=form.get("id_usuario")
             self.id_factura=form.get("id_factura")
             self.id_transportista=form.get("id_transportista")
             self.id_vehiculo=form.get("id_vehiculo")

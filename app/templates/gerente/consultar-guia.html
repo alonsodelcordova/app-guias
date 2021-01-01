@@ -55,7 +55,7 @@
                     {%if list_guia%}
                     {%for guia in list_guia%}
                     <tr>
-                        <td>{{guia.id}}</td>
+                        <td>{{loop.index}}</td>
                         <td>{{guia.fecha_inicio.strftime('%Y-%m-%d')}}</td>
                         <td>{{guia.factura.numero_factura}}</td>
                         <td>{{guia.oficina.nombre_oficina}}</td>

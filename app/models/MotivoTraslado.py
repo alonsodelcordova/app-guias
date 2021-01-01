@@ -9,8 +9,16 @@ class MotivoTraslado(db.Model):
     guias = db.relationship('GuiaRemision') 
 
     def __init__(self, form):
-        self.nombre_motivo=form.get("nombre_motivo")
+        self.nombre_motivo=form.get("nombre")
         
+    def to_json(self):
+        dict={
+            'id':self.id,
+            'nombre':self.nombre_motivo,
+            'fecha':self.fecha.strftime('%Y-%m-%d')
+        }
+        return dict
+
     def save_motivo(self):
         try:
             db.session.add(self)
@@ -21,7 +29,7 @@ class MotivoTraslado(db.Model):
 
     def update_motivo(self, form):
         try:
-            self.nombre_motivo=form.get("nombre_motivo")
+            self.nombre_motivo=form.get("nombre")
             db.session.commit()
             return True
         except:
