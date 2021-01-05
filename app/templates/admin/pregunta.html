@@ -1,7 +1,7 @@
 {% extends 'base/base-gerente.html'%}
 {% block content %}
 <!-- Registrar Oficina-->
-<div class="modal fade" id="modalRespuesta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modalPregunta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -17,8 +17,14 @@
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md">
-                                <label for="nombre" class="col-form-label">Nombre: </label>
-                                <input type="text" name="nombre" class="form-control" id="nombre" required autofocus>
+                                <label for="pregunta" class="col-form-label">Pregunta: </label>
+                                <input type="text" name="pregunta" class="form-control" id="pregunta" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md">
+                                <label for="respuesta" class="col-form-label">Respuesta: </label>
+                                <input type="text" name="respuesta" class="form-control" id="respuesta" required>
                             </div>
                         </div>
                         <div class="form-row">
@@ -32,18 +38,12 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md">
-                                <label for="direccion" class="col-form-label">Direccion: </label>
-                                <input type="text" name="direccion" class="form-control" id="direccion" required>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-outline-info mr-3 "
-                        onsubmit="cargando('Registrando Provincia!!')">Registrar</button>
+                        onclick="cargando('Registrando Pregunta!!')">Registrar</button>
                     <button type="reset" class="btn btn-outline-danger">Limpiar</button>
                     <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>
@@ -59,8 +59,8 @@
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Lista de Preguntas</h5>
-            <button class="btn btn-outline-info" onclick="abrirModal('modalRespuesta','Registrar nueva Oficina')"> 
-                <i class="fa fa-plus"></i> Agregar Respuesta
+            <button class="btn btn-outline-info" onclick="abrirModal('modalPregunta','Registrar nueva Pregunta')"> 
+                <i class="fa fa-plus"></i> Agregar Pregunta
             </button>
         </div>
     </div>
@@ -85,10 +85,10 @@
                         <td>{{pregunta.pregunta}}</td>
                         <td>{{pregunta.respuesta}}</td>
                         <td>
-                            <button class="btn btn-warning " onclick="editarOficina({{oficina.id}})"
+                            <button class="btn btn-warning " onclick="editarPregunta({{pregunta.id}})"
                                 data-toggle="tooltip" data-placement="top" title="Editar"><i
                                     class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger " onclick="eliminarOficina({{oficina.id}})"
+                            <button class="btn btn-danger " onclick="eliminarPregunta({{pregunta.id}})"
                                 data-toggle="tooltip" data-placement="top" title="Eliminar"><i
                                     class="fas fa-trash-alt"></i></button>
                         </td>
@@ -108,5 +108,5 @@
 
 {%endblock%}
 {%block scripts%}
-<script src="{{ url_for('static',filename='js/admin/oficina.js') }}"></script>
+<script src="{{ url_for('static',filename='js/admin/pregunta.js') }}"></script>
 {%endblock%}

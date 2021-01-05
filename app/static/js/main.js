@@ -56,7 +56,7 @@ function addUser(elem) {
     if ($("#password").val() == $("#password2").val()) {
         elem.target.submit();
     } else {
-
+        messageSweet('error', 'Las contraseñas no coinciden!!', 'ingrese contraseñas iguales')
         $("#password").focus();
     }
 }
@@ -111,4 +111,8 @@ function buscarTabla(){
             tableReg.rows[i].style.display = 'none';
         }
     }
+  }
+
+  function back(){
+    history.back();
   }

@@ -1,0 +1,120 @@
+{% extends 'base/base-gerente.html'%}
+{% block content %}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <h5 class="font-weight-bold text-primary">Editar mis Datos</h5>
+            <a class="btn btn-outline-info" href="/perfil">Regresar</a>
+        </div>
+    </div>
+    <form method="POST" id="form">
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="dni" class="col-form-label">Dni: </label>
+                        <input type="number" name="dni" class="form-control" id="dni" required autofocus>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="nombres" class="col-form-label">Nombre: </label>
+                        <input type="text" name="nombres" class="form-control" id="nombres" maxlength="20"  required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="primer_apellido" class="col-form-label">Primer Apellido: </label>
+                        <input type="text" name="primer_apellido" class="form-control" id="primer_apellido"  required>
+                    </div>
+                    <div class="col-md">
+                        <label for="segundo_apellido" class="col-form-label">Segundo Apellido: </label>
+                        <input type="text" name="segundo_apellido" class="form-control" id="segundo_apellido"  required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="email" class="col-form-label">Email: </label>
+                        <input type="email" name="email" class="form-control" id="email"  required>
+                    </div>
+                    <div class="col-md">
+                        <label for="numero_celular" class="col-form-label">Numero de Celular: </label>
+                        <input type="number" name="numero_celular" class="form-control" id="numero_celular" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="estado_civil" class="col-form-label">Estado Civil: </label>
+                        <select name="estado_civil" class="form-control" id="estado_civil"  required>
+                            <option value="0" hidden>Seleccionar</option>
+                            <option value="S">Soltero</option>
+                            <option value="C">Casado</option>
+                            <option value="V">Viudo</option>
+                            <option value="D">Divorciado</option>
+                            <option value="N">No especificar</option>
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="sexo" class="col-form-label">Sexo: </label>
+                        <select name="sexo" class="form-control" id="sexo"  required>
+                            <option value="0" hidden>Seleccionar</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="N">No especificar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="id_departamento" class="col-form-label">Departamento: </label>
+                        <select name="id_departamento" class="form-control" id="id_departamento"  required
+                            onchange="mostrarProvincias()">
+                            <option value="0" hidden>Seleccionar</option>
+                            {% for departamento in list_departamento%}
+                            <option value="{{departamento.id}}">{{departamento.nombre_departamento}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="id_provincia" class="col-form-label">Provincia: </label>
+                        <select name="id_provincia" class="form-control" id="id_provincia"
+                            onchange="mostrarDistritos()">
+                            <option value="0" hidden>Seleccionar</option>
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="id_distrito" class="col-form-label">Distrito: </label>
+                        <select name="id_distrito" class="form-control" id="id_distrito" required>
+                            <option value="0" hidden>Seleccionar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md">
+                        <label for="direccion" class="col-form-label">Direccion: </label>
+                        <input type="text" name="direccion" class="form-control" id="direccion" maxlength="100"  required>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        </div>
+        <div class="card-footer">
+
+            <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 " onclick="cargando('Registrando Persona!!')">Agregar</button>
+            <button type="reset" class="btn btn-outline-danger">Limpiar</button>
+        </div>
+    </form>
+</div>
+
+
+{%endblock%}
+
+{%block scripts%}
+<script src="{{ url_for('static',filename='js/direccion.js') }}"></script>
+<script src="{{ url_for('static',filename='js/admin/persona.js') }}"></script>
+<script>
+    editarPersona({{usuario.persona.id}});
+</script>
+{%endblock%}

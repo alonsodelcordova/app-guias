@@ -27,12 +27,17 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-// Area Chart Example
+function areaChart(meses,montos){
+  if (window.grafica) {
+    window.grafica.clear();
+    window.grafica.destroy();
+  }
+  // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
+window.grafica = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    labels: meses,
     datasets: [{
       label: "Cantidad",
       lineTension: 0.3,
@@ -46,7 +51,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 13000, 15000, 16000, 20000, 21000, 25000, 27000, 30000, 35000, 40000],
+      data: montos,
     }],
   },
   options: {
@@ -116,3 +121,5 @@ var myLineChart = new Chart(ctx, {
     }
   }
 });
+}
+

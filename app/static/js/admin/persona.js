@@ -1,5 +1,4 @@
 function editarPersona(id){
-    $('#id').val(id);
     $.ajax({
         url: "/api/persona/"+id,
         method: 'GET',

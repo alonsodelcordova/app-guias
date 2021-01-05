@@ -1,6 +1,8 @@
 from . import admin as view
 from flask import session, request, flash, url_for, redirect,render_template,g
 
+from app.models.Cliente import Cliente
+
 from app.models.Cargo import Cargo
 from app.models.Menu import Menu
 from app.models.Link import Link
@@ -26,7 +28,21 @@ def admin():
     cargos=Cargo.query.order_by(Cargo.id).all()
     personas=Persona.query.order_by(Persona.id).all()
     facturas=Factura.query.order_by(Factura.id).all()
-    return render_template("admin/index.html",menus=menus,list_menus=list_menus,cargos=cargos,personas=personas,facturas=facturas)
+    clientes=Cliente.query.all()
+    departamentos=Departamento.query.all()
+    claves ={
+        'cargos':len([(row) for row in cargos]),
+        'clientes':len([(row) for row in clientes]),
+        'departamentos':len([(row) for row in departamentos]),
+        'provincias':sum([len(row.provincias) for row in departamentos]),
+        'guias':sum([len(row.guias) for row in facturas]),
+        'facturas':len([(row) for row in facturas]),
+        'personas':len([(row) for row in personas])
+    }
+    return render_template("admin/index.html",
+                menus=menus,list_menus=list_menus,
+                cargos=cargos,personas=personas,
+                facturas=facturas,claves=claves)
 
 @view.route("/cargo", methods=["GET"])
 def cargo():
@@ -119,7 +135,7 @@ def postusuario(id):
         id_usuario=request.form["id"]
         usuario = Usuario.query.filter_by(id=id_usuario).first()
         usuario.id_persona=id
-        if usuario.update_usuario(request.form):
+        if usuario.change_usuario(request.form):
             flash("Usuario Actualizado con exito !!")
         else:
             flash("No se puede guardar")
@@ -287,16 +303,16 @@ def pregunta():
 @view.route("/pregunta", methods=["POST"])
 def postpregunta():
     if request.form["id"] != "": #update
-        id_moneda=request.form["id"]
-        moneda = TipoMoneda.query.filter_by(id=id_moneda).first()
-        if moneda.update_moneda(request.form):
-            flash("Tipo de Moneda Actualizada con exito !!")
+        id_pregunta=request.form["id"]
+        pregunta = Pregunta.query.filter_by(id=id_pregunta).first()
+        if pregunta.update_pregunta(request.form):
+            flash("Pregunta Actualizada con exito !!")
         else:
             flash("No se puede guardar")
     else:
-        moneda = TipoMoneda(request.form)
-        if moneda.save_moneda():
-            flash("Moneda guardada con exito !!")
+        pregunta = Pregunta(request.form)
+        if pregunta.save_pregunta():
+            flash("Pregunta guardada con exito !!")
         else:
             flash("No se puede guardar")
     return redirect(url_for("admin.pregunta"))

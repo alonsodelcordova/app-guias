@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <p>Fecha de Registro : <span class="badge badge-secondary">{{motivo.fecha.strftime('%d-%m-%Y  %H:%M:%S')}}</span> </p>
-                        {{motivo.id}}
+                        {{motivo.guias|length}}
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-outline-warning " onclick="editarMotivo({{motivo.id}})"><i class="fas fa-edit"></i></button>
@@ -69,7 +69,7 @@
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 " onclick="cargando('Registrando Motivo!!')">Registrar</button>
                     <button type="reset" class="btn btn-outline-danger">Limpiar</button>
                     <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>

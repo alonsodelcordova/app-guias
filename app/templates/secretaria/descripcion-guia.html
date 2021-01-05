@@ -3,7 +3,7 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Descripciones de la Guia</h1>
-    <a href="/guia/{{guia.id_factura}}" class="btn btn-outline-success"> <i class="fa fa-wallet"></i> Ir a Guia</a>
+    <button onclick="back()" class="btn btn-outline-success"> <i class="fa fa-wallet"></i> Regresar</button>
 </div>
 
 
@@ -11,11 +11,12 @@
 <div class="card shadow mb-4">
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
-            <button class="btn  btn-outline-primary shadow" onclick="abrirModal('modalDescripcion','Registrar Descripcion')"> <i
-                class="fa fa-plus"></i> Registrar Descripcion</button>
+            <button class="btn  btn-outline-primary shadow"
+                onclick="abrirModal('modalDescripcion','Registrar Descripcion')"> <i class="fa fa-plus"></i> Registrar
+                Descripcion</button>
         </div>
     </div>
-    <div class="card-body text-black-50"  >
+    <div class="card-body text-black-50">
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="tableData">
                 <thead>
@@ -39,8 +40,10 @@
                         <td>{{descripcion.peso}}</td>
                         <td>
                             <p>
-                                <button class="btn btn-warning mb-2" onclick="editarDescripcion({{descripcion.id}})"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger "  onclick="eliminarDescripcion({{descripcion.id}})"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-warning mb-2" onclick="editarDescripcion({{descripcion.id}})"><i
+                                        class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger " onclick="eliminarDescripcion({{descripcion.id}})"><i
+                                        class="fas fa-trash-alt"></i></button>
                             </p>
                         </td>
                     </tr>
@@ -94,7 +97,8 @@
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 "
+                        onclick="cargando('Registrando Descripcion de Guia!!')">Registrar</button>
                     <button type="reset" class="btn btn-outline-danger">Limpiar</button>
                     <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>

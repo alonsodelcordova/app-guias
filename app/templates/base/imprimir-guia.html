@@ -1,0 +1,22 @@
+{% extends 'base/base-gerente.html'%} {% block content %}
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <a class="btn btn-outline-primary" onclick="imprimir({{guia.id}})"> <i class="fa fa-print"></i> Imprimir</a>
+            <button onclick="back()" class="btn btn-outline-success"> <i class="fa fa-wallet"></i> Regresar</button>
+        </div>
+    </div>
+    <div class="card-body">
+        {% from "macros/_guia.html" import mostrar_guia %}
+        {{mostrar_guia(guia)}}
+    </div>
+
+</div>
+{%endblock%}
+
+{%block scripts%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"
+    integrity="sha512-pdCVFUWsxl1A4g0uV6fyJ3nrnTGeWnZN2Tl/56j45UvZ1OMdm9CIbctuIHj+yBIRTUUyv6I9+OivXj4i0LPEYA=="
+    crossorigin="anonymous"></script>
+{%endblock%}

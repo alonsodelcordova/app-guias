@@ -4,18 +4,22 @@ from flask import session, request, url_for, redirect,render_template,g
 from app.models.Menu import Menu
 from app.models.GuiaRemision import GuiaRemision
 from app.models.Factura import Factura
-
+from app.models.Cliente import Cliente
+from app.models.MotivoTraslado import MotivoTraslado
 
 @view.route("/gerente")
 def gerente():
     menus=Menu.query.filter_by(id_cargo=1).all()
     facturas=Factura.query.all()
+    clientes=Cliente.query.all()
     claves = {
             'monto':sum([(row.total) for row in facturas]),
-            'n_guias':len([(row.guias) for row in facturas]),
-            'n_facturas':len([(row) for row in facturas])
+            'n_guias':sum([len(row.guias) for row in facturas]),
+            'n_facturas':len([(row) for row in facturas]),
+            'n_clientes':len([(row) for row in clientes])
             }
-    return render_template("gerente/index.html",menus=menus,claves=claves)
+    motivos=MotivoTraslado.query.all()
+    return render_template("gerente/index.html",menus=menus,claves=claves,motivos=motivos)
 
 @view.route("/consultar-guia/<int:id>")
 @view.route("/consultar-guia")
@@ -32,7 +36,7 @@ def consultar_guia(id=0):
 def imprimir_guia(id):
     menus=Menu.query.filter_by(id_cargo=1).all()
     guia=GuiaRemision.query.filter_by(id=id).first()
-    return render_template("gerente/imprimir-guia.html",menus=menus,guia=guia)
+    return render_template("base/imprimir-guia.html",menus=menus,guia=guia)
 
 @view.route("/consultar-factura")
 def consultar_factura():

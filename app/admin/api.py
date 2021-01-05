@@ -12,6 +12,8 @@ from app.models.Oficina import Oficina
 from app.models.Usuario import Usuario
 from app.models.Persona import Persona
 
+from app.models.Pregunta import Pregunta
+
 from flask import jsonify
 
 #********************* direccion
@@ -222,6 +224,27 @@ def usuario_delete(id):
     usuario = Usuario.query.filter_by(id=id).first() 
     if usuario.delete_usuario():
         return jsonify(dict(mesage='usuario eliminado'))
+    else:
+        return jsonify(dict(mesage='No se puede Eliminar')),404
+    pass
+
+
+#preguntas 
+@api.route("/pregunta/<int:id>", methods=["GET"])
+def pregunta(id):
+    pregunta=Pregunta.query.filter_by(id=id).first()
+    if pregunta is not None:
+        return jsonify(pregunta.to_json())
+    else:
+        return jsonify(dict(mesage='Recurso no encontrado')),404
+    pass
+
+#eliminar pregunta
+@api.route("/pregunta/<int:id>", methods=["DELETE"])
+def pregunta_delete(id):
+    pregunta = Pregunta.query.filter_by(id=id).first() 
+    if pregunta.delete_pregunta():
+        return jsonify(dict(mesage='Pregunta eliminado'))
     else:
         return jsonify(dict(mesage='No se puede Eliminar')),404
     pass

@@ -51,13 +51,19 @@ class Usuario(db.Model):
         except:
             return False
 
-    def update_usuario(self, form):
+    def change_usuario(self, form):
         self.usuario = form.get("usuario")
         self.id_cargo = form.get("id_cargo")
         self.id_oficina = form.get("id_oficina")
-        db.session.commit()
-        return True
+        return self.update_usuario()
         
+    def update_usuario(self):
+        try:
+            db.session.commit()
+            return True
+        except:
+            return False
+
     def update_password(self,password):
         self.password=self.__create_password(password)
     

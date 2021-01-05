@@ -64,9 +64,13 @@
                         <td>{{guia.factura.cliente.razon_social}}</td>
                         <td>
                             <p>
-                                <button class="btn btn-warning mb-2" onclick="abrirModal('modalRegistrar')"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-warning mb-2" onclick="abrirModal('modalRegistrar')"
+                                    data-toggle="tooltip" data-placement="left" title="Editar"><i
+                                        class="fas fa-edit"></i></button>
                                 <a href="/descripcion-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
                                     data-placement="left" title="Descripciones"> <i class="fa fa-list-alt"></i></a>
+                                <a href="/ver-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
+                                    data-placement="left" title="Ver Guia"> <i class="fa fa-eye"></i> Ver</a>
                             </p>
                         </td>
                     </tr>
@@ -170,7 +174,8 @@
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 ">Registrar</button>
+                    <button type="submit" id="btn-guardar" class="btn btn-outline-info mr-3 "
+                        onclick="cargando('Registrando Guia !!')">Registrar</button>
                     <button type="reset" class="btn btn-outline-danger">Limpiar</button>
                     <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
                 </div>

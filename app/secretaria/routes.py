@@ -17,8 +17,18 @@ from app.models.Usuario import Usuario
 
 @view.route("/secretaria")
 def secretaria():
+    user=session["usuario"]
     menus=Menu.query.filter_by(id_cargo=2).all()
-    return render_template("secretaria/index.html",menus=menus)
+    facturas=Factura.query.all()
+    clientes=Cliente.query.all()
+    guias=GuiaRemision.query.filter_by(id_usuario=user["id"]).all()
+    claves = {
+            'n_guias':len([(row) for row in guias]),
+            'n_facturas':sum([len(row) for row in facturas]),
+            'n_clientes':len([(row) for row in clientes])
+            }
+    motivos=MotivoTraslado.query.all()
+    return render_template("secretaria/index.html",motivos=motivos,menus=menus,claves=claves)
 
 @view.route("/cliente")
 def cliente():
@@ -31,7 +41,7 @@ def postcliente():
     if request.form["id"] != "": #update
         id_cliente=request.form["id"]
         cliente = Cliente.query.filter_by(id=id_cliente).first()
-        if cliente.update_cliente(request.form):
+        if cliente.change_cliente(request.form):
             flash("Cliente Actualizado con exito !!")
         else:
             flash("No se puede guardar")
@@ -215,3 +225,9 @@ def postdescripcion_guia(id):
         else:
             flash("No se puede guardar")
     return redirect(url_for("secretaria.descripcion_guia",id=id))
+
+@view.route("/ver-guia/<int:id>")
+def imprimir_guia(id):
+    menus=Menu.query.filter_by(id_cargo=2).all()
+    guia=GuiaRemision.query.filter_by(id=id).first()
+    return render_template("base/imprimir-guia.html",menus=menus,guia=guia)

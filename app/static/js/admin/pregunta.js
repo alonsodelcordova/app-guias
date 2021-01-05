@@ -1,6 +1,6 @@
-function editarOficina(id){
+function editarPregunta(id){
     $.ajax({
-        url: "/api/oficina/"+id,
+        url: "/api/pregunta/"+id,
         method: 'GET',
         data: {},
         cache: false,
@@ -8,15 +8,11 @@ function editarOficina(id){
         success: function (respuesta) 
         {
             $('#id').val(id);
-            $("#nombre").val(respuesta.nombre);
-            $("#direccion").val(respuesta.direccion);
-            //para la direccion
-            $("#id_departamento option").attr("selected",false);
-            $("#id_departamento option[value="+ respuesta.id_departamento +"]").attr("selected",true);
-            mostrarProvincias(respuesta.id_provincia);
-            $("#exampleModalLabel").html("Actualizar Oficina");  
-            $("#modalOficina").modal("show");
-            mostrarDistritos(respuesta.id_provincia,respuesta.id_distrito);
+            $("#pregunta").val(respuesta.pregunta);
+            $("#respuesta").val(respuesta.respuesta);
+            $("#id_usuario option[value="+ respuesta.id_usuario +"]").attr("selected",true);
+            $("#exampleModalLabel").html("Actualizar Pregunta");  
+            $("#modalPregunta").modal("show");
             
         },
         error: function () {
@@ -24,13 +20,13 @@ function editarOficina(id){
         }
     });
 }
-function eliminarOficina(id){
-    eliminarSweet("Eliminar Oficina!!", "¿Realmente quiere salir?", "Eliminar",id);
+function eliminarPregunta(id){
+    eliminarSweet("Eliminar pregunta!!", "¿Realmente quiere salir?", "Eliminar",id);
 }
 
 function eliminarDato(id){
     $.ajax({
-        url: "/api/oficina/"+id,
+        url: "/api/pregunta/"+id,
         method: 'DELETE',
         data: $("#form").serialize(),
         cache: false,

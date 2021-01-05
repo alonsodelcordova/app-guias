@@ -37,12 +37,15 @@ class Cliente(db.Model):
         except:
             return False
 
-    def update_cliente(self, form):
+    def change_cliente(self, form):
+        self.razon_social=form.get("razon_social")
+        self.tipo_documento=form.get("tipo_documento")
+        self.numero_documento=form.get("numero_documento")
+        self.direccion=form.get("direccion")
+        return self.update_cliente()
+        
+    def update_cliente(self):
         try:
-            self.razon_social=form.get("razon_social")
-            self.tipo_documento=form.get("tipo_documento")
-            self.numero_documento=form.get("numero_documento")
-            self.direccion=form.get("direccion")
             db.session.commit()
             return True
         except:
