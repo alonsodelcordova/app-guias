@@ -11,9 +11,9 @@
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                     <div class="sidebar-brand-icon ">
-                        <img src="{{ url_for('static',filename='img/logo-productos.jpg') }}" width="50px" alt="icono">
+                        <img src="{{ url_for('static',filename='img/logo-productos.jpg') }}" width="60" alt="icono">
                     </div>
-                    <div class="sidebar-brand-text mx-3">AGROSECHURA</div>
+                    <div class="sidebar-brand-text ">AGROSECHURA</div>
                 </a>
 
                 <!-- Divider -->
@@ -88,12 +88,11 @@
 
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle " href="#" id="userDropdown" role="button"
+                                <a class="nav-link dropdown-toggle text-success" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span
-                                        class="mr-2 d-none d-lg-inline text-gray-600 small text-uppercase">{{session["usuario"].usuario}}</span>
-                                    <img class="img-profile rounded-circle"
-                                        src="{{ url_for('static',filename='img/logo-productos.jpg') }}">
+                                        class="mr-2 font-weight-bold text-uppercase">{{session["usuario"].usuario}}</span>
+                                    <i class="fa fa-user-circle fa-2x rounded-circle"></i>
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
