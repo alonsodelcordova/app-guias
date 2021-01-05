@@ -24,7 +24,7 @@ def secretaria():
     guias=GuiaRemision.query.filter_by(id_usuario=user["id"]).all()
     claves = {
             'n_guias':len([(row) for row in guias]),
-            'n_facturas':sum([len(row) for row in facturas]),
+            'n_facturas':len([(row) for row in facturas]),
             'n_clientes':len([(row) for row in clientes])
             }
     motivos=MotivoTraslado.query.all()
