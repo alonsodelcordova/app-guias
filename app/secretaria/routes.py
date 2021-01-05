@@ -152,6 +152,7 @@ def postfactura():
 @view.route("/guia/<int:id>")
 @view.route("/guia")
 def guia(id=0):
+    usuario=session["usuario"]
     menus=Menu.query.filter_by(id_cargo=2).all()
     oficinas=Oficina.query.all()
     transportistas=Transportista.query.all()
@@ -164,7 +165,8 @@ def guia(id=0):
         return render_template("secretaria/guia.html",
             menus=menus, oficinas=oficinas, facturas=facturas,
             transportistas=transportistas,
-            vehiculos=vehiculos, motivos=motivos, list_guia=list_guia
+            vehiculos=vehiculos, motivos=motivos, list_guia=list_guia,
+            usuario=usuario
             )
     else:
         factura=Factura.query.filter_by(id=id).first()
@@ -172,7 +174,7 @@ def guia(id=0):
         return render_template("secretaria/guia.html",
             menus=menus, oficinas=oficinas, factura=factura, 
             transportistas=transportistas,
-            vehiculos=vehiculos, motivos=motivos,list_guia=list_guia
+            vehiculos=vehiculos, motivos=motivos,list_guia=list_guia,usuario=usuario
             )
     pass
 

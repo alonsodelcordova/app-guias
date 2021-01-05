@@ -63,15 +63,15 @@
                         <td>{{guia.oficina.nombre_oficina}}</td>
                         <td>{{guia.factura.cliente.razon_social}}</td>
                         <td>
-                            <p>
+                            {%if guia.id_usuario==usuario["id"]%}
                                 <button class="btn btn-warning mb-2" onclick="abrirModal('modalRegistrar')"
                                     data-toggle="tooltip" data-placement="left" title="Editar"><i
                                         class="fas fa-edit"></i></button>
                                 <a href="/descripcion-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
                                     data-placement="left" title="Descripciones"> <i class="fa fa-list-alt"></i></a>
+                            {%endif%}
                                 <a href="/ver-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
                                     data-placement="left" title="Ver Guia"> <i class="fa fa-eye"></i> Ver</a>
-                            </p>
                         </td>
                     </tr>
                     {%endfor%}
