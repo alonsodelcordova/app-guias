@@ -4,7 +4,7 @@ import datetime
 class DescripcionGuia(db.Model):
     __tablename__ = "descripcion_guia"
     id = db.Column(db.Integer, primary_key=True)
-    descripcion = db.Column(db.String(50), nullable=False)
+    descripcion = db.Column(db.String(300), nullable=False)
     cantidad = db.Column(db.Integer, nullable=False)
     unidad_medida = db.Column(db.Float, nullable=False)
     peso = db.Column(db.Float, nullable=False)
