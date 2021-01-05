@@ -12,7 +12,7 @@ class GuiaRemision(db.Model):
     id_transportista = db.Column(db.Integer, db.ForeignKey("transportista.id"), nullable=False)
     id_vehiculo = db.Column(db.Integer, db.ForeignKey("vehiculo.id"), nullable=False)
     id_motivo_traslado = db.Column(db.Integer, db.ForeignKey("motivo_traslado.id"), nullable=False)
-    punto_destino = db.Column(db.String(50), nullable=False)
+    punto_destino = db.Column(db.String(300), nullable=False)
 
     descripcion_guias = db.relationship('DescripcionGuia') 
     oficina = db.relationship('Oficina', backref='guia_remision')
