@@ -28,7 +28,7 @@ def postLogin():
         flash("Usuario no existe")
     return redirect(url_for("login.login"))
 
-    
+
 
 @view.route("/logout", methods=["GET"])
 def logout():
@@ -36,4 +36,11 @@ def logout():
         session.pop("usuario")
     return redirect(url_for("login.login"))
 
+
+"""
+Register new user
+"""   
+@view.route("/register", methods=['GET'])
+def register_view():
+    return render_template('login/register.html')
 
