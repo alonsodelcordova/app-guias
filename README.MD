@@ -7,6 +7,8 @@ Use python for working this proyect
 > - Company: PROYECTO ARCOIRIS PIURA
 > - Year: 2019
 
+Use `Python V 3.9`
+
 Run commands before init project in windows PC:
 > `py -m venv venv`
 
