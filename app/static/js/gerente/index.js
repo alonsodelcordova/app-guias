@@ -58,3 +58,26 @@ function mostrarGuias(){
         }
     });
 }
+
+getYears();
+
+function getYears(){
+    $.ajax({
+        url: "/api/years",
+        method: 'GET',
+        data: {},
+        cache: false,
+        dataType: 'json',
+        success: function (respuesta) 
+        {
+            var html = '';
+            respuesta.forEach(data => {
+                html += '<option value="'+data+'">'+data+'</option>';
+            });
+            $("#year").html(html);
+        },
+        error: function () {
+            messageSweet('error',"Error del Servidor!!","Ocurrio un error inesperado");
+        }
+    });
+}
