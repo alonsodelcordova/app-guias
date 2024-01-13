@@ -16,5 +16,4 @@ def before_request():
         return redirect(url_for("login.login"))
 
 from . import routes
-
 from . import api
