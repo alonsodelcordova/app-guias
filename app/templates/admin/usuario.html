@@ -1,4 +1,4 @@
-{% extends 'base/base-gerente.html'%}
+{% extends 'base/base-admin.html'%}
 {% block content %}
 
 
@@ -33,15 +33,13 @@
                     </div>
                 </div>
                 <p>Dni: {{persona.dni}} <br>
-                    Direccion: {{persona.direccion}} - {{persona.distrito.nombre_distrito}} -
-                    {{persona.distrito.provincia.nombre_provincia}} -
-                    {{persona.distrito.provincia.departamento.nombre_departamento}}
+                    Direccion: {{persona.direccion}} 
                 </p>
             </div>
         </div>
 
         <hr>
-        <button class="btn btn-info" onclick="abrirModal('modalUsuario','Registrar Usuario')"> <i class="fa fa-plus"></i> Registrar Usuario</button>
+        <button class="btn btn-info" onclick="agregarUsuario()"> <i class="fa fa-plus"></i> Registrar Usuario</button>
         <hr>
         <div class="row">
             {% if persona.usuarios%}

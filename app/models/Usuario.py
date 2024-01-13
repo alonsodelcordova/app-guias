@@ -41,6 +41,7 @@ class Usuario(db.Model):
         return generate_password_hash(clave)
 
     def verify_password(self, password):
+        #return self.password == password
         return check_password_hash(self.password, password)
 
     def save_usuario(self):

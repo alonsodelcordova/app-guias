@@ -1,4 +1,19 @@
-{% extends 'base/base-gerente.html'%}
+
+{% if session['usuario'].id_cargo==1 %}
+
+    {% extends 'base/base-gerente.html'%}
+
+{% elif session['usuario'].id_cargo==2 %}
+
+    {% extends 'base/base-secretaria.html'%}
+
+{% elif session['usuario'].id_cargo==3 %}
+
+    {% extends 'base/base-admin.html'%}
+
+{% endif %}
+
+
 {% block content %}
 <div class="card border-left-primary shadow w-75">
     <div class="card-body">
@@ -27,7 +42,7 @@
                         <h4 class="text-uppercase"><strong>{{usuario.persona.nombres}} {{usuario.persona.primer_apellido}} {{usuario.persona.segundo_apellido}}</strong></h4>
                         <strong>DNI:</strong>  {{usuario.persona.dni}} <br>
                         <strong>Celular: </strong> {{usuario.persona.numero_celular}} <br>
-                        <strong>Direccion:</strong>  {{usuario.persona.direccion}} - {{usuario.persona.distrito.nombre_distrito}} - {{usuario.persona.distrito.provincia.nombre_provincia}} - {{usuario.persona.distrito.provincia.departamento.nombre_departamento}} <br>
+                        <strong>Direccion:</strong>  {{usuario.persona.direccion}}  <br>
                     </div>
                     
                 </div>

@@ -1,3 +1,12 @@
+function agregarUsuario(){
+    $("#exampleModalLabel").html("Agregar Usuario");  
+    $("#modalUsuario").modal("show");
+    $("#password").show();
+    $("#password2").show();
+    $("#form").trigger("reset");
+
+}
+
 function editarUsuario(id){
     $('#id').val(id);
     $.ajax({
@@ -13,6 +22,8 @@ function editarUsuario(id){
             $("#id_oficina option[value="+ respuesta.id_oficina +"]").attr("selected",true);
             $("#usuario").val(respuesta.usuario);
             $("#dni").val(respuesta.dni);
+            $("#password").hide();
+            $("#password2").hide();
             //para el modal
             $("#exampleModalLabel").html("Actualizar Usuario");  
             $("#modalUsuario").modal("show");
@@ -22,6 +33,9 @@ function editarUsuario(id){
         }
     });
 }
+
+
+
 function eliminarUsuario(id){
     eliminarSweet("Eliminar Usuario!!", "¿Realmente quiere salir?", "Eliminar",id);
 }

@@ -5,7 +5,6 @@ class Persona(db.Model):
     __tablename__ = "persona"
     id = db.Column(db.Integer, primary_key=True)
     dni = db.Column(db.String(8), nullable=False)
-    id_distrito = db.Column(db.Integer, db.ForeignKey("distrito.id"), nullable=False)
     nombres = db.Column(db.String(50), nullable=False)
     primer_apellido = db.Column(db.String(50), nullable=False)
     segundo_apellido = db.Column(db.String(50), nullable=False)
@@ -17,12 +16,10 @@ class Persona(db.Model):
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
 
     usuarios = db.relationship('Usuario') 
-    distrito = db.relationship('Distrito', backref='persona')
 
     def __init__(self, form):
         self.nombres=form.get("nombres")
         self.dni=form.get("dni")
-        self.id_distrito=form.get("id_distrito")
         self.primer_apellido=form.get("primer_apellido")
         self.segundo_apellido=form.get("segundo_apellido")
         self.estado_civil=form.get("estado_civil")
@@ -36,9 +33,6 @@ class Persona(db.Model):
             'id':self.id,
             'nombres':self.nombres,
             'dni':self.dni,
-            'id_distrito':self.id_distrito,
-            'id_provincia':self.distrito.id_provincia,
-            'id_departamento':self.distrito.provincia.id_departamento,
             'primer_apellido':self.primer_apellido,
             'segundo_apellido':self.segundo_apellido,
             'estado_civil':self.estado_civil,
@@ -62,7 +56,6 @@ class Persona(db.Model):
         try:
             self.dni=form.get("dni")
             self.nombres=form.get("nombres")
-            self.id_distrito=form.get("id_distrito")
             self.primer_apellido=form.get("primer_apellido")
             self.segundo_apellido=form.get("segundo_apellido")
             self.estado_civil=form.get("estado_civil")

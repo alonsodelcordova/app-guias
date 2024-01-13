@@ -1,4 +1,4 @@
-{% extends 'base/base-gerente.html'%} {% block content %}
+{% extends 'base/base-admin.html'%} {% block content %}
 
 <!-- Registrar Cargo-->
 <div class="modal fade" id="modalCargo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -60,30 +60,10 @@
                                 <i class="fas fa-user-tie fa-2x text-gray-300"></i>
                             </div>
                         </div>
-                            <h6>Menus:</h6>
-                        <hr>
-                        <div class="row">
-                            {%for menu in cargo.menus%}
-                            <div class="col-md-6 mb-2">
-                                <div class="card border-left-success shadow">
-                                    <div class="card-body">
-                                        <p class="text-success font-weight-bold">{{menu.nombre_menu}}</p> 
-                                        Links: <br>
-                                        {%for link in menu.links%}
-                                            <span class="badge badge-info m-1">{{link.id}}  - {{link.nombre_link}}</span>
-                                        {%endfor%}
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>
-                            {%endfor%}
-                        </div>
-
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-outline-warning " onclick="editarCargo({{cargo.id}})" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-edit"></i></button>
                         <button class="btn btn-outline-danger " onclick="eliminarCargo({{cargo.id}})" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fas fa-trash-alt"></i></button>
-                        <a class="btn btn-outline-success " href="/menu/{{cargo.id}}">Menus</a>
                     </div>
                 </div>
             </div>

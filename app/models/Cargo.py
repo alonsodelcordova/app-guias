@@ -7,7 +7,6 @@ class Cargo(db.Model):
     nombre_cargo = db.Column(db.String(50), nullable=False, unique=True)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
     usuarios = db.relationship('Usuario',cascade="all, delete") 
-    menus = db.relationship('Menu',cascade="all, delete") 
 
     def __init__(self, form):
         self.nombre_cargo=form.get("nombre_cargo")

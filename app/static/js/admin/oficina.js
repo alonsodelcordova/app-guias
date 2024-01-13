@@ -11,12 +11,8 @@ function editarOficina(id){
             $("#nombre").val(respuesta.nombre);
             $("#direccion").val(respuesta.direccion);
             //para la direccion
-            $("#id_departamento option").attr("selected",false);
-            $("#id_departamento option[value="+ respuesta.id_departamento +"]").attr("selected",true);
-            mostrarProvincias(respuesta.id_provincia);
             $("#exampleModalLabel").html("Actualizar Oficina");  
             $("#modalOficina").modal("show");
-            mostrarDistritos(respuesta.id_provincia,respuesta.id_distrito);
             
         },
         error: function () {

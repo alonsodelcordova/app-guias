@@ -16,11 +16,6 @@ def create_app(enviroment):
     
     #modelos
     from app.models.Cargo import Cargo
-    from app.models.Menu import Menu
-    from app.models.Link import Link
-    from app.models.Departamento import Departamento
-    from app.models.Provincia import Provincia
-    from app.models.Distrito import Distrito
     from app.models.Persona import Persona
     from app.models.Oficina import Oficina
     from app.models.Usuario import Usuario

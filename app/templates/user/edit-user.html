@@ -1,4 +1,20 @@
-{% extends 'base/base-gerente.html'%}
+
+{% if session['usuario'].id_cargo==1 %}
+
+    {% extends 'base/base-gerente.html'%}
+
+{% elif session['usuario'].id_cargo==2 %}
+
+    {% extends 'base/base-secretaria.html'%}
+
+{% elif session['usuario'].id_cargo==3 %}
+
+    {% extends 'base/base-admin.html'%}
+
+{% endif %}
+
+
+
 {% block content %}
 
 <!-- DataTales Example -->
@@ -66,31 +82,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-md">
-                        <label for="id_departamento" class="col-form-label">Departamento: </label>
-                        <select name="id_departamento" class="form-control" id="id_departamento"  required
-                            onchange="mostrarProvincias()">
-                            <option value="0" hidden>Seleccionar</option>
-                            {% for departamento in list_departamento%}
-                            <option value="{{departamento.id}}">{{departamento.nombre_departamento}}</option>
-                            {%endfor%}
-                        </select>
-                    </div>
-                    <div class="col-md">
-                        <label for="id_provincia" class="col-form-label">Provincia: </label>
-                        <select name="id_provincia" class="form-control" id="id_provincia"
-                            onchange="mostrarDistritos()">
-                            <option value="0" hidden>Seleccionar</option>
-                        </select>
-                    </div>
-                    <div class="col-md">
-                        <label for="id_distrito" class="col-form-label">Distrito: </label>
-                        <select name="id_distrito" class="form-control" id="id_distrito" required>
-                            <option value="0" hidden>Seleccionar</option>
-                        </select>
-                    </div>
-                </div>
+              
                 <div class="form-row">
                     <div class="col-md">
                         <label for="direccion" class="col-form-label">Direccion: </label>
@@ -112,7 +104,6 @@
 {%endblock%}
 
 {%block scripts%}
-<script src="{{ url_for('static',filename='js/direccion.js') }}"></script>
 <script src="{{ url_for('static',filename='js/admin/persona.js') }}"></script>
 <script>
     editarPersona({{usuario.persona.id}});

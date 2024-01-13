@@ -1,7 +1,6 @@
 from . import secretaria as view
 from flask import session, request, url_for, redirect,render_template,g, flash
 
-from app.models.Menu import Menu
 from app.models.Cliente import Cliente
 from app.models.Transportista import Transportista
 from app.models.Vehiculo import Vehiculo
@@ -18,7 +17,6 @@ from app.models.Usuario import Usuario
 @view.route("/secretaria")
 def secretaria():
     user=session["usuario"]
-    menus=Menu.query.filter_by(id_cargo=2).all()
     facturas=Factura.query.all()
     clientes=Cliente.query.all()
     guias=GuiaRemision.query.filter_by(id_usuario=user["id"]).all()
@@ -28,13 +26,12 @@ def secretaria():
             'n_clientes':len([(row) for row in clientes])
             }
     motivos=MotivoTraslado.query.all()
-    return render_template("secretaria/index.html",motivos=motivos,menus=menus,claves=claves)
+    return render_template("secretaria/index.html",motivos=motivos,claves=claves)
 
 @view.route("/cliente")
 def cliente():
-    menus=Menu.query.filter_by(id_cargo=2).all()
     list_cliente = Cliente.query.order_by(Cliente.id).all()
-    return render_template("secretaria/cliente.html",list_cliente=list_cliente,menus=menus)
+    return render_template("secretaria/cliente.html",list_cliente=list_cliente)
 
 @view.route("/cliente", methods=["POST"])
 def postcliente():
@@ -55,9 +52,8 @@ def postcliente():
 
 @view.route("/transportista")
 def transportista():
-    menus=Menu.query.filter_by(id_cargo=2).all()
     list_transportista=Transportista.query.order_by(Transportista.id).all()
-    return render_template("secretaria/transportista.html",list_transportista=list_transportista,menus=menus)
+    return render_template("secretaria/transportista.html",list_transportista=list_transportista)
 
 @view.route("/transportista", methods=["POST"])
 def posttransportista():
@@ -78,9 +74,8 @@ def posttransportista():
 
 @view.route("/vehiculo")
 def vehiculo():
-    menus=Menu.query.filter_by(id_cargo=2).all()
     list_vehiculo=Vehiculo.query.order_by(Vehiculo.id).all()
-    return render_template("secretaria/vehiculo.html",list_vehiculo=list_vehiculo ,menus=menus)
+    return render_template("secretaria/vehiculo.html",list_vehiculo=list_vehiculo )
 
 @view.route("/vehiculo", methods=["POST"])
 def postvehiculo():
@@ -103,9 +98,8 @@ def postvehiculo():
 
 @view.route("/motivo-traslado")
 def motivo_traslado():
-    menus=Menu.query.filter_by(id_cargo=2).all()
     list_motivo=MotivoTraslado.query.order_by(MotivoTraslado.id).all()
-    return render_template("secretaria/motivo-traslado.html",list_motivo=list_motivo,menus=menus)
+    return render_template("secretaria/motivo-traslado.html",list_motivo=list_motivo)
 
 @view.route("/motivo-traslado", methods=["POST"])
 def postmotivo():
@@ -126,11 +120,10 @@ def postmotivo():
 
 @view.route("/factura")
 def factura():
-    menus=Menu.query.filter_by(id_cargo=2).all()
     clientes=Cliente.query.all()
     monedas=TipoMoneda.query.all()
     list_factura=Factura.query.order_by(Factura.id).all()
-    return render_template("secretaria/factura.html",menus=menus,clientes=clientes,monedas=monedas,list_factura=list_factura)
+    return render_template("secretaria/factura.html",clientes=clientes,monedas=monedas,list_factura=list_factura)
 
 @view.route("/factura", methods=["POST"])
 def postfactura():
@@ -153,7 +146,6 @@ def postfactura():
 @view.route("/guia")
 def guia(id=0):
     usuario=session["usuario"]
-    menus=Menu.query.filter_by(id_cargo=2).all()
     oficinas=Oficina.query.all()
     transportistas=Transportista.query.all()
     vehiculos= Vehiculo.query.all()
@@ -163,7 +155,7 @@ def guia(id=0):
         facturas=Factura.query.all()
         list_guia = GuiaRemision.query.order_by(GuiaRemision.id).all()
         return render_template("secretaria/guia.html",
-            menus=menus, oficinas=oficinas, facturas=facturas,
+         oficinas=oficinas, facturas=facturas,
             transportistas=transportistas,
             vehiculos=vehiculos, motivos=motivos, list_guia=list_guia,
             usuario=usuario
@@ -172,7 +164,7 @@ def guia(id=0):
         factura=Factura.query.filter_by(id=id).first()
         list_guia=factura.guias
         return render_template("secretaria/guia.html",
-            menus=menus, oficinas=oficinas, factura=factura, 
+         oficinas=oficinas, factura=factura, 
             transportistas=transportistas,
             vehiculos=vehiculos, motivos=motivos,list_guia=list_guia,usuario=usuario
             )
@@ -205,9 +197,8 @@ def postguia(id=0):
 
 @view.route("/descripcion-guia/<int:id>")
 def descripcion_guia(id):
-    menus=Menu.query.filter_by(id_cargo=2).all()
     guia=GuiaRemision.query.filter_by(id=id).first()
-    return render_template("secretaria/descripcion-guia.html",guia=guia,menus=menus)
+    return render_template("secretaria/descripcion-guia.html",guia=guia)
 
 @view.route("/descripcion-guia/<int:id>", methods=["POST"])
 def postdescripcion_guia(id):
@@ -230,6 +221,5 @@ def postdescripcion_guia(id):
 
 @view.route("/ver-guia/<int:id>")
 def imprimir_guia(id):
-    menus=Menu.query.filter_by(id_cargo=2).all()
     guia=GuiaRemision.query.filter_by(id=id).first()
-    return render_template("base/imprimir-guia.html",menus=menus,guia=guia)
+    return render_template("base/imprimir-guia.html",guia=guia)

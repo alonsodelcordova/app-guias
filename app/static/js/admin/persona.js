@@ -21,11 +21,6 @@ function editarPersona(id){
 
             //para la direccion
             $("#direccion").val(respuesta.direccion);
-            $("#id_departamento option").attr("selected",false);
-            $("#id_departamento option[value="+ respuesta.id_departamento +"]").attr("selected",true);
-            mostrarProvincias(respuesta.id_provincia);
-            mostrarDistritos(respuesta.id_provincia,respuesta.id_distrito);
-
             //para el modal
             $("#exampleModalLabel").html("Actualizar Persona");  
             $("#modalPersona").modal("show");

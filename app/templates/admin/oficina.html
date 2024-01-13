@@ -1,4 +1,4 @@
-{% extends 'base/base-gerente.html'%}
+{% extends 'base/base-admin.html'%}
 {% block content %}
 <!-- Registrar Oficina-->
 <div class="modal fade" id="modalOficina" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -19,31 +19,6 @@
                             <div class="col-md">
                                 <label for="nombre" class="col-form-label">Nombre: </label>
                                 <input type="text" name="nombre" class="form-control" id="nombre" required autofocus>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md">
-                                <label for="id_departamento" class="col-form-label">Departamento: </label>
-                                <select name="id_departamento" class="form-control" id="id_departamento"
-                                    onchange="mostrarProvincias()">
-                                    <option value="0" hidden>Seleccionar</option>
-                                    {% for departamento in list_departamento%}
-                                    <option value="{{departamento.id}}">{{departamento.nombre_departamento}}</option>
-                                    {%endfor%}
-                                </select>
-                            </div>
-                            <div class="col-md">
-                                <label for="id_provincia" class="col-form-label">Provincia: </label>
-                                <select name="id_provincia" class="form-control" id="id_provincia"
-                                    onchange="mostrarDistritos()">
-                                    <option value="0" hidden>Seleccionar</option>
-                                </select>
-                            </div>
-                            <div class="col-md">
-                                <label for="id_distrito" class="col-form-label">Distrito: </label>
-                                <select name="id_distrito" class="form-control" id="id_distrito" required>
-                                    <option value="0" hidden>Seleccionar</option>
-                                </select>
                             </div>
                         </div>
                         <div class="form-row">
@@ -95,9 +70,7 @@
                     <tr>
                         <td>{{oficina.id}}</td>
                         <td>{{oficina.nombre_oficina}}</td>
-                        <td>{{oficina.direccion}} <br>
-                            {{oficina.distrito.nombre_distrito}} - {{oficina.distrito.provincia.nombre_provincia}} -
-                            {{oficina.distrito.provincia.departamento.nombre_departamento}}
+                        <td>{{oficina.direccion}} 
                         </td>
                         <td>
                             <button class="btn btn-warning " onclick="editarOficina({{oficina.id}})"

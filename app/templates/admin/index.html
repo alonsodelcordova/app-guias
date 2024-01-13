@@ -1,4 +1,4 @@
-{% extends 'base/base-gerente.html'%}
+{% extends 'base/base-admin.html'%}
 {% block content %}
 
 <!-- Page Heading -->
@@ -36,42 +36,6 @@
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Cargos Registrados</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800"># {{claves["cargos"]}}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-user fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Departamentos Registrados</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"># {{claves["departamentos"]}}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-user fa-2x text-gray-300"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Provincias Registrados</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"># {{claves["provincias"]}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -126,10 +90,6 @@
                 aria-controls="usuarios" aria-selected="true">Usuarios</a>
         </li>
         <li class="nav-item">
-            <a class="btn btn-outline-info nav-link" data-toggle="tab" href="#menus" role="tab" aria-controls="menus"
-                aria-selected="false">Menus</a>
-        </li>
-        <li class="nav-item">
             <a class="btn btn-outline-info nav-link" data-toggle="tab" href="#facturas" role="tab"
                 aria-controls="facturas" aria-selected="false">Facturas</a>
         </li>
@@ -161,35 +121,6 @@
                         {%endfor%}
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="menus" role="tabpanel" data-filter-list="dropzone-previews">
-            <div class="content-list">
-                <h3>Menus</h3>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <th>#</th>
-                            <th>Cargo</th>
-                            <th>Menu</th>
-                            <th>Links</th>
-                        </thead>
-                        <tbody>
-                            {%for menu in list_menus%}
-                            <tr>
-                                <td>{{menu.id}}</td>
-                                <td>{{menu.cargo.nombre_cargo}}</td>
-                                <td>{{menu.nombre_menu}}</td>
-                                <td>
-                                    {%for link in menu.links%}
-                                    <span class="badge badge-info">{{link.id}} - {{link.nombre_link}}</span>
-                                    {%endfor%}
-                                </td>
-                            </tr>
-                            {%endfor%}
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
         <div class="tab-pane fade" id="facturas" role="tabpanel" data-filter-list="list-group-activity">

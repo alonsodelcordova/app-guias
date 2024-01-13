@@ -15,3 +15,7 @@ Run commands before init project in windows PC:
 For install system use next command in python:
 
 > `pip install -r requirements.txt`
+
+
+--> Admin -> OK
+--> Secretaria -> registro de facturas -> falla
