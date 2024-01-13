@@ -10,7 +10,7 @@ class Usuario(db.Model):
     id_oficina = db.Column(db.Integer, db.ForeignKey("oficina.id"), nullable=False)
     id_persona = db.Column(db.Integer, db.ForeignKey("persona.id"), nullable=False)
     usuario = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(94), nullable=False)
+    password = db.Column(db.String(256), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
     estado = db.Column(db.String(1),default='A', nullable=False)
 

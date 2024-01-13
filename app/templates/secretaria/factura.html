@@ -96,8 +96,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md">
-                                <label for="tipo_moneda" class="col-form-label">Tipo de Moneda: </label>
-                                <select name="tipo_moneda" class="form-control" id="tipo_moneda">
+                                <label for="id_tipo_moneda" class="col-form-label">Tipo de Moneda: </label>
+                                <select name="id_tipo_moneda" class="form-control" id="id_tipo_moneda">
                                     <option value="" hidden>Seleccionar</option>
                                     {%for moneda in monedas%}
                                     <option value="{{moneda.id}}">{{moneda.nombre_moneda}} ({{moneda.prefijo}})</option>

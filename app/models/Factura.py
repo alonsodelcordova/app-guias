@@ -19,10 +19,11 @@ class Factura(db.Model):
     def __init__(self, form):
         self.numero_factura=form.get("numero_factura")
         self.id_cliente=form.get("id_cliente")
-        self.id_tipo_moneda=form.get("tipo_moneda")
-        self.fecha_emision=form.get("fecha_emision")
+        self.id_tipo_moneda=form.get("id_tipo_moneda")
         self.observacion=form.get("observacion")
         self.total=form.get("total")
+        self.fecha_emision = form.get("fecha_emision")
+
     
     def to_json(self):
         dict={
