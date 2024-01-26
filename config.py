@@ -5,9 +5,9 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    #SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:123456@127.0.0.1:5432/agrosechura'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:123456@127.0.0.1:5432/agrosechura'
     #SQLALCHEMY_DATABASE_URI = 'sqlite:///../app-guias.sqlite3'
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost:3306/agrosechura'
+    #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost:3306/agrosechura'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class ProductionConfig(Config):
@@ -20,4 +20,3 @@ config = {
     'production': ProductionConfig
 }
 
-#postgres://remcrnwmxlvnpw:c4b0269e77924721ef4ae160a972279331a9972382109d544a7ab8986388f048@ec2-34-238-26-109.compute-1.amazonaws.com:5432/dckonl1hua8af1
