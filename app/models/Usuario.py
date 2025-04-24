@@ -14,11 +14,10 @@ class Usuario(db.Model):
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
     estado = db.Column(db.String(1),default='A', nullable=False)
 
-    guias = db.relationship('GuiaRemision') 
-    preguntas = db.relationship('Pregunta') 
-    cargo = db.relationship('Cargo', backref='usuario')
-    oficina = db.relationship('Oficina', backref='usuario')
-    persona = db.relationship('Persona', backref='usuario')
+    cargo = db.relationship('Cargo', backref = 'usuarios', foreign_keys=[id_cargo])
+    oficina = db.relationship('Oficina', backref = 'usuarios', foreign_keys=[id_oficina])
+    persona = db.relationship('Persona', backref = 'usuarios', foreign_keys=[id_persona])
+
 
     def __init__(self, form):
         self.usuario = form.get("usuario")

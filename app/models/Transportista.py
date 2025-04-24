@@ -11,7 +11,6 @@ class Transportista(db.Model):
     apellidos = db.Column(db.String(50), nullable=False)
     numero_licencia = db.Column(db.String(20),unique=True, nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
-    guias = db.relationship('GuiaRemision') 
 
     def __init__(self, form):
         self.ruc=form.get("ruc")

@@ -9,7 +9,6 @@ class Cliente(db.Model):
     numero_documento = db.Column(db.String(20), nullable=False,unique=True)
     direccion = db.Column(db.String(100), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
-    facturas = db.relationship('Factura') 
 
     def __init__(self, form):
         self.razon_social=form.get("razon_social")

@@ -174,6 +174,7 @@ def guia(id=0):
 @view.route("/guia/<int:id>", methods=["POST"])
 def postguia(id=0):
     usuario=session["usuario"]
+    print(request.form)
     if request.form["id"] != "": #update
         id_guia=request.form["id"]
         guia = GuiaRemision.query.filter_by(id=id_guia).first()

@@ -12,9 +12,8 @@ class Factura(db.Model):
     estado = db.Column(db.String(1),default='A', nullable=False)
     total = db.Column(db.Float, nullable=False)
     
-    guias = db.relationship('GuiaRemision')
-    cliente = db.relationship('Cliente', backref='factura')
-    tipo_moneda = db.relationship('TipoMoneda', backref='factura')
+    cliente = db.relationship('Cliente', backref = 'facturas', foreign_keys=[id_cliente])
+    tipo_moneda = db.relationship('TipoMoneda', backref = 'facturas', foreign_keys=[id_tipo_moneda])
 
     def __init__(self, form):
         self.numero_factura=form.get("numero_factura")

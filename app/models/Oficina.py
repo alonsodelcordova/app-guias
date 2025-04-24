@@ -8,7 +8,6 @@ class Oficina(db.Model):
     direccion = db.Column(db.String(100), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
 
-    guias = db.relationship('GuiaRemision') 
 
     def __init__(self, form):
         self.nombre_oficina=form.get("nombre")

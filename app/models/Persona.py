@@ -15,7 +15,6 @@ class Persona(db.Model):
     direccion = db.Column(db.String(50), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
 
-    usuarios = db.relationship('Usuario') 
 
     def __init__(self, form):
         self.nombres=form.get("nombres")

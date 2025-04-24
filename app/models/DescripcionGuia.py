@@ -11,7 +11,7 @@ class DescripcionGuia(db.Model):
     id_guia_remision = db.Column(db.Integer, db.ForeignKey("guia_remision.id"), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
 
-    guia_remision = db.relationship('GuiaRemision', backref='descripcion_guia')
+    guia_remision = db.relationship('GuiaRemision', backref = 'descripcion_guias', foreign_keys=[id_guia_remision])
 
     def __init__(self, form):
         self.descripcion=form.get("descripcion")

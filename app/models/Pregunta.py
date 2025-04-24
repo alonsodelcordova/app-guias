@@ -9,7 +9,7 @@ class Pregunta(db.Model):
     respuesta = db.Column(db.String(100), nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
 
-    usuario = db.relationship('Usuario', backref='pregunta')
+    usuario = db.relationship('Usuario', backref = 'preguntas', foreign_keys=[id_usuario])
 
     def __init__(self, form):
         self.id_usuario=form.get("id_usuario")

@@ -13,14 +13,14 @@ class GuiaRemision(db.Model):
     id_vehiculo = db.Column(db.Integer, db.ForeignKey("vehiculo.id"), nullable=False)
     id_motivo_traslado = db.Column(db.Integer, db.ForeignKey("motivo_traslado.id"), nullable=False)
     punto_destino = db.Column(db.String(300), nullable=False)
+    direccion = db.Column(db.String(300), nullable=True)
 
-    descripcion_guias = db.relationship('DescripcionGuia') 
-    oficina = db.relationship('Oficina', backref='guia_remision')
-    usuario = db.relationship('Usuario', backref='guia_remision')
-    factura = db.relationship('Factura', backref='guia_remision')
-    transportista = db.relationship('Transportista', backref='guia_remision')
-    vehiculo = db.relationship('Vehiculo', backref='guia_remision')
-    motivo_traslado = db.relationship('MotivoTraslado', backref='guia_remision')
+    oficina = db.relationship('Oficina', backref = 'guias', foreign_keys=[id_oficina])
+    usuario = db.relationship('Usuario', backref = 'guias', foreign_keys=[id_usuario])
+    factura = db.relationship('Factura', backref = 'guias', foreign_keys=[id_factura])
+    transportista = db.relationship('Transportista', backref = 'guias', foreign_keys=[id_transportista])
+    vehiculo = db.relationship('Vehiculo', backref = 'guias', foreign_keys=[id_vehiculo])
+    motivo_traslado = db.relationship('MotivoTraslado', backref = 'guias', foreign_keys=[id_motivo_traslado])
 
 
     def __init__(self, form):

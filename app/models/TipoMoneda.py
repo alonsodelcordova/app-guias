@@ -7,7 +7,6 @@ class TipoMoneda(db.Model):
     nombre_moneda = db.Column(db.String(20),unique=True, nullable=False)
     prefijo = db.Column(db.String(3),unique=True, nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
-    facturas = db.relationship('Factura')
 
     def __init__(self, form):
         self.nombre_moneda=form.get("nombre")

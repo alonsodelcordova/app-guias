@@ -3,18 +3,22 @@ from app.models.GuiaRemision import GuiaRemision
 from app.models.MotivoTraslado import MotivoTraslado
 from app.models.Factura import Factura
 from app import db
-from sqlalchemy import func
+from sqlalchemy import func, text
 from flask import jsonify
 
 #********************* ventas -> Año, mes y Monto
 @api.route("/ventas/<int:year>", methods=["GET"])
 @api.route("/ventas", methods=["GET"])
 def ventas(year=0):
+    sSQLtext = None
     if year==0:
-        facturas=db.engine.execute("SELECT year(fecha_emision) as año, month(fecha_emision) as  mes, sum(total) FROM factura GROUP BY año,mes order by año desc")
+        sSQLtext= text("SELECT EXTRACT(YEAR FROM fecha_emision) as año, EXTRACT(MONTH FROM fecha_emision) as  mes, sum(total) FROM factura GROUP BY año,mes order by año desc")
     else:
-        facturas=db.engine.execute(f"SELECT  year(fecha_emision) as año, month(fecha_emision) as mes, sum(total) FROM factura WHERE year(fecha_emision) = {year}  GROUP BY año,mes order by año desc")
+        sSQLtext = text(f"SELECT  EXTRACT(YEAR FROM fecha_emision) as año, EXTRACT(MONTH FROM fecha_emision) as mes, sum(total) FROM factura WHERE EXTRACT(YEAR FROM fecha_emision) = {year}  GROUP BY año,mes order by año desc")
     data=[]
+    
+    with db.engine.connect() as conn:
+        facturas = conn.execute(sSQLtext)
 
     for row in facturas:
         data.append(
@@ -38,8 +42,10 @@ def guias():
 
 @api.route("/years", methods=["GET"])
 def get_years():
-    years = db.engine.execute("SELECT year(fecha_emision) as año FROM factura GROUP BY año order by año desc")
     data = []
+    years = None
+    with db.engine.connect() as conn:
+        years = conn.execute(text("SELECT EXTRACT(YEAR FROM fecha_emision) as año FROM factura GROUP BY año order by año desc"))
     for row in years:
         data.append(row[0])
     return jsonify(data)

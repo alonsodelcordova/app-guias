@@ -8,7 +8,6 @@ class Vehiculo(db.Model):
     modelo_vehiculo = db.Column(db.String(15), nullable=False)
     placa_vehiculo = db.Column(db.String(15), nullable=False, unique=True)
     fecha = db.Column(db.DateTime, default=datetime.datetime.now)
-    guias = db.relationship('GuiaRemision')
 
     def __init__(self, form):
         self.marca_vehiculo=form.get("marca_vehiculo")
