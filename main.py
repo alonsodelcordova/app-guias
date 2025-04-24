@@ -5,8 +5,9 @@ from flask import render_template
 
 enviroment = config['development']
 
-if config_decouple('PRODUCTION', default=False):
+if config_decouple('PRODUCTION', default=False) == 'True':
     enviroment = config['production']
+
 
 app = create_app(enviroment)
 

@@ -13,7 +13,7 @@ function editarFactura(id){
             $("#fecha_emision").val(respuesta.fecha_emision);
             $("#total").val(respuesta.total);
             $("#id_cliente option[value="+ respuesta.id_cliente +"]").attr("selected",true);
-            $("#tipo_moneda option[value="+ respuesta.id_tipo_moneda +"]").attr("selected",true);
+            $("#id_tipo_moneda option[value="+ respuesta.id_tipo_moneda +"]").attr("selected",true);
 
             $("#observacion").html(respuesta.observacion);
             $("#modalFactura").modal("show");

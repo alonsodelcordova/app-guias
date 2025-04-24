@@ -3,3 +3,5 @@ Flask-SQLAlchemy
 Flask-WTF
 gunicorn
 psycopg2
+python-decouple
+cryptography 

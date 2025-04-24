@@ -29,15 +29,20 @@
     <div class="card-header">
         <div class="d-sm-flex align-items-center justify-content-between">
             <h5 class="font-weight-bold text-primary">Guias de Remision </h5>
-            <a class="btn btn-outline-info" href="/factura"><i class="fa fa-file-invoice-dollar"></i> Facturas</a>
+            <a class="btn btn-outline-info" href="/factura">
+                <i class="fa fa-file-invoice-dollar"></i> 
+                Facturas
+            </a>
         </div>
     </div>
     <div class="card-body">
         <div class="d-sm-flex align-items-center justify-content-between">
-            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" onkeyup="buscarTabla()"
-                placeholder="Buscar Aqui...">
-            <button class="btn btn-outline-info" onclick="abrirModal('modalRegistrar')"> <i class="fa fa-plus"></i>
-                Registrar Guias</button>
+            <input type="text" id="datoBuscar" class="form-control col-md-3 m-2" 
+                onkeyup="buscarTabla()" placeholder="Buscar Aqui...">
+            <button class="btn btn-outline-info" onclick="abrirModal('modalGuia', 'Registrar nueva guía')"> 
+                <i class="fa fa-plus"></i>
+                Registrar Guias
+            </button>
         </div>
 
         <br>
@@ -64,14 +69,20 @@
                         <td>{{guia.factura.cliente.razon_social}}</td>
                         <td>
                             {%if guia.id_usuario==usuario["id"]%}
-                                <button class="btn btn-warning mb-2" onclick="abrirModal('modalRegistrar')"
-                                    data-toggle="tooltip" data-placement="left" title="Editar"><i
-                                        class="fas fa-edit"></i></button>
+                                <button class="btn btn-warning mb-2" onclick="editarGuia({{guia.id}})"
+                                    data-toggle="tooltip" data-placement="left" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                                 <a href="/descripcion-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
-                                    data-placement="left" title="Descripciones"> <i class="fa fa-list-alt"></i></a>
+                                    data-placement="left" title="Descripciones"> 
+                                    <i class="fa fa-list-alt"></i>
+                                </a>
                             {%endif%}
                                 <a href="/ver-guia/{{guia.id}}" class="btn btn-info mb-2" data-toggle="tooltip"
-                                    data-placement="left" title="Ver Guia"> <i class="fa fa-eye"></i> Ver</a>
+                                    data-placement="left" title="Ver Guia"> 
+                                    <i class="fa fa-eye"></i> 
+                                    Ver
+                                </a>
                         </td>
                     </tr>
                     {%endfor%}
@@ -88,7 +99,7 @@
 
 
 <!-- Registrar Modal-->
-<div class="modal  fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal  fade" id="modalGuia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -137,7 +148,7 @@
                             <div class="col-md">
                                 <label for="id_factura" class="col-form-label">Factura: </label>
                                 {%if factura %}
-                                <input type="text" value="{{factura.numero_factura}}" class="form-control" readonly>
+                                <input type="text" name="id_factura" id="id_factura" value="{{factura.id}}" class="form-control" readonly>
                                 {%else%}
                                 <select name="id_factura" class="form-control" id="id_factura">
                                     <option value="" hidden>Seleccionar</option>
@@ -168,6 +179,12 @@
                                     <option value="{{vehiculo.id}}">{{vehiculo.placa_vehiculo}}</option>
                                     {%endfor%}
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md">
+                                <label for="direccion">Direccion: </label>
+                                <input type="text" name="direccion" class="form-control" id="direccion">
                             </div>
                         </div>
                     </div>
