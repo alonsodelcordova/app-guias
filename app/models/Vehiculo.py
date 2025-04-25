@@ -28,8 +28,10 @@ class Vehiculo(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Vehiculo guardado: {self.marca_vehiculo} {self.modelo_vehiculo} {self.placa_vehiculo}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_vehiculo(self, form):
@@ -38,16 +40,20 @@ class Vehiculo(db.Model):
             self.modelo_vehiculo=form.get("modelo_vehiculo")
             self.placa_vehiculo=form.get("placa_vehiculo")
             db.session.commit()
+            print(f"Vehiculo actualizado: {self.marca_vehiculo} {self.modelo_vehiculo} {self.placa_vehiculo}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_vehiculo(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Vehiculo eliminado: {self.marca_vehiculo} {self.modelo_vehiculo} {self.placa_vehiculo}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

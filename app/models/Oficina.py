@@ -27,8 +27,10 @@ class Oficina(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Oficina guardada: {self.nombre_oficina}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_oficina(self, form):
@@ -36,16 +38,20 @@ class Oficina(db.Model):
             self.nombre_oficina=form.get("nombre")
             self.direccion=form.get("direccion")
             db.session.commit()
+            print(f"Oficina actualizada: {self.nombre_oficina}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_oficina(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Oficina eliminada: {self.nombre_oficina}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

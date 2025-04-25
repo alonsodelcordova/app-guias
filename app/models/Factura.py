@@ -40,29 +40,35 @@ class Factura(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Factura guardada: {self.numero_factura}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_factura(self, form):
         try:
             self.numero_factura=form.get("numero_factura")
             self.id_cliente=form.get("id_cliente")
-            self.id_tipo_moneda=form.get("tipo_moneda")
+            self.id_tipo_moneda=form.get("id_tipo_moneda")
             self.fecha_emision=form.get("fecha_emision")
             self.observacion=form.get("observacion")
             self.total=form.get("total")
             db.session.commit()
+            print(f"Factura actualizada: {self.numero_factura}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_factura(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Factura eliminada: {self.numero_factura}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

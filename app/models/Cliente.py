@@ -32,8 +32,10 @@ class Cliente(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Cliente guardado: {self.razon_social}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def change_cliente(self, form):
@@ -46,17 +48,20 @@ class Cliente(db.Model):
     def update_cliente(self):
         try:
             db.session.commit()
+            print(f"Cliente actualizado: {self.razon_social}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_cliente(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Cliente eliminado: {self.razon_social}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
-
 
 

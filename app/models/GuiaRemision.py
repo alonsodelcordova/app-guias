@@ -52,8 +52,10 @@ class GuiaRemision(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Guia guardada: {self.id}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_guia(self, form):
@@ -67,16 +69,20 @@ class GuiaRemision(db.Model):
             self.direccion=form.get("direccion")
             self.punto_destino=form.get("punto_destino")
             db.session.commit()
+            print(f"Guia actualizada: {self.id}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_guia(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Guia eliminada: {self.id}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

@@ -25,8 +25,10 @@ class TipoMoneda(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Moneda guardada: {self.nombre_moneda}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_moneda(self, form):
@@ -34,16 +36,20 @@ class TipoMoneda(db.Model):
             self.nombre_moneda=form.get("nombre")
             self.prefijo=form.get("prefijo")
             db.session.commit()
+            print(f"Moneda actualizada: {self.nombre_moneda}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_moneda(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Moneda eliminada: {self.nombre_moneda}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

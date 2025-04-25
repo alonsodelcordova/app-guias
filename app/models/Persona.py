@@ -47,8 +47,10 @@ class Persona(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Persona guardada: {self.nombres}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_persona(self, form):
@@ -63,16 +65,20 @@ class Persona(db.Model):
             self.email=form.get("email")
             self.direccion=form.get("direccion")
             db.session.commit()
+            print(f"Persona actualizada: {self.nombres}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_persona(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Persona eliminada: {self.nombres}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

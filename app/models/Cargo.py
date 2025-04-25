@@ -22,24 +22,30 @@ class Cargo(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Cargo guardado: {self.nombre_cargo}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_cargo(self, form):
         try:
             self.nombre_cargo=form.get("nombre_cargo")
             db.session.commit()
+            print(f"Cargo actualizado: {self.nombre_cargo}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_cargo(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Cargo eliminado: {self.nombre_cargo}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
         
 

@@ -36,6 +36,7 @@ def cliente():
 @view.route("/cliente", methods=["POST"])
 def postcliente():
     if request.form["id"] != "": #update
+        print("Actualizando cliente")
         id_cliente=request.form["id"]
         cliente = Cliente.query.filter_by(id=id_cliente).first()
         if cliente.change_cliente(request.form):
@@ -43,6 +44,7 @@ def postcliente():
         else:
             flash("No se puede guardar")
     else:   #guardar
+        print("Guardando cliente")
         cliente = Cliente(request.form)
         if cliente.save_cliente():
             flash("cliente guardado con exito !!")

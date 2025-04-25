@@ -31,23 +31,23 @@
                 </thead>
                 <tbody>
                     {%if guia.descripcion_guias%}
-                    {%for descripcion in guia.descripcion_guias%}
-                    <tr>
-                        <td>{{loop.index}}</td>
-                        <td>{{descripcion.descripcion}}</td>
-                        <td>{{descripcion.cantidad}}</td>
-                        <td>{{descripcion.unidad_medida}}</td>
-                        <td>{{descripcion.peso}}</td>
-                        <td>
-                            <p>
-                                <button class="btn btn-warning mb-2" onclick="editarDescripcion({{descripcion.id}})"><i
-                                        class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger " onclick="eliminarDescripcion({{descripcion.id}})"><i
-                                        class="fas fa-trash-alt"></i></button>
-                            </p>
-                        </td>
-                    </tr>
-                    {%endfor%}
+                        {%for descripcion in guia.descripcion_guias%}
+                        <tr>
+                            <td>{{loop.index}}</td>
+                            <td>{{descripcion.descripcion}}</td>
+                            <td>{{descripcion.cantidad}}</td>
+                            <td>{{descripcion.unidad_medida}}</td>
+                            <td>{{descripcion.peso}}</td>
+                            <td>
+                                <button class="btn btn-warning mb-2" onclick="editarDescripcion({{descripcion.id}})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger " onclick="eliminarDescripcion({{descripcion.id}})">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {%endfor%}
                     {%else%}
                     <tr>
                         <td colspan="6" class="text-center">No hay datos disponibles</td>

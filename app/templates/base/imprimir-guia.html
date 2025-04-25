@@ -1,4 +1,13 @@
-{% extends 'base/base-gerente.html'%} {% block content %}
+
+{% if session['usuario']['id_cargo'] == 1 %}
+    {% extends 'base/base-gerente.html'%} 
+{% elif session['usuario']['id_cargo'] == 2 %}
+    {% extends 'base/base-secretaria.html'%} 
+{% elif session['usuario']['id_cargo'] == 3 %}
+    {% extends 'base/base-admin.html'%}
+{% endif %}
+
+{% block content %}
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header">

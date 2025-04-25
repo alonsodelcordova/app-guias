@@ -35,8 +35,10 @@ class DescripcionGuia(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Descripcion guardada: {self.descripcion}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_descripcion(self, form):
@@ -46,14 +48,18 @@ class DescripcionGuia(db.Model):
             self.unidad_medida=form.get("unidad_medida")
             self.peso= float(form.get("cantidad")) * float(form.get("unidad_medida"))
             db.session.commit()
+            print(f"Descripcion actualizada: {self.descripcion}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_descripcion(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Descripcion eliminada: {self.descripcion}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False

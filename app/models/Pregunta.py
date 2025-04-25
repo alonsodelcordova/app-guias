@@ -31,8 +31,10 @@ class Pregunta(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Pregunta guardada: {self.pregunta}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_pregunta(self, form):
@@ -41,16 +43,20 @@ class Pregunta(db.Model):
             self.pregunta=form.get("pregunta")
             self.respuesta=form.get("respuesta")
             db.session.commit()
+            print(f"Pregunta actualizada: {self.pregunta}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_pregunta(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Pregunta eliminada: {self.pregunta}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

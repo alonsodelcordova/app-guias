@@ -35,8 +35,10 @@ class Transportista(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Transportista guardado: {self.denominacion}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_transportista(self, form):
@@ -47,16 +49,20 @@ class Transportista(db.Model):
             self.apellidos=form.get("apellidos")
             self.numero_licencia=form.get("numero_licencia")
             db.session.commit()
+            print(f"Transportista actualizado: {self.denominacion}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def delete_transportista(self):
         try:
             db.session.delete(self)
             db.session.commit()
+            print(f"Transportista eliminado: {self.denominacion}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
 

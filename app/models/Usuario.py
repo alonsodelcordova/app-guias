@@ -47,8 +47,10 @@ class Usuario(db.Model):
         try:
             db.session.add(self)
             db.session.commit()
+            print(f"Usuario guardado: {self.usuario}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def change_usuario(self, form):
@@ -60,8 +62,10 @@ class Usuario(db.Model):
     def update_usuario(self):
         try:
             db.session.commit()
+            print(f"Usuario actualizado: {self.usuario}")
             return True
-        except:
+        except Exception as e:
+            print(e)
             return False
 
     def update_password(self,password):
@@ -70,4 +74,5 @@ class Usuario(db.Model):
     def delete_usuario(self):
         db.session.delete(self)
         db.session.commit()
+        print(f"Usuario eliminado: {self.usuario}")
         return True
