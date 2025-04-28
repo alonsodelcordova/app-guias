@@ -4,17 +4,17 @@
     <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
     <div class="col-lg-6">
         <div class="p-5">
-            <div class="text-center">
-                <h5 class="text-gray-900">Bienvenido a Agro Sechura SAC</h5>
+            <div class="text-center my-3">
+                <h5 class="text-gray-900 font-weight-bold">Bienvenido a Agro Sechura SAC</h5>
                 <div class="card-img-bottom mb-2">
                     <img src="{{ url_for('static',filename='img/logo-productos.jpg') }}" width="200" alt="icono">
                 </div>
             </div>
             <form class="user" method="POST" action="{{url_for('login.postLogin')}}">
-                <div class="form-group">
+                <div class="form-group my-4">
                     <input type="text" class="form-control form-control-user" id="nombre" name="nombre" required  placeholder="Ingrese su usuario">
                 </div>
-                <div class="form-group">
+                <div class="form-group my-4">
                     <input type="password" class="form-control form-control-user" id="password" name="password" required placeholder="Contraseña">
                 </div>
                 {% with messages=get_flashed_messages() %} 
@@ -29,16 +29,13 @@
                             {% endfor %} 
                         {% endif %} 
                 {% endwith %}
+                <br>
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <button type="submit"  class="btn btn-primary btn-user btn-block" onclick="cargando('Iniciando Sesion!')">
                     Ingresar
                 </button>
+                <br>
             </form>
-            <hr>
-            <div class="text-center m-1">
-                <a href="/register" class="btn-link">Registrarme</a> |
-                <a href="/forgot-password" class="btn-link">Olvidé mi contraseña</a>
-            </div>
         </div>
     </div>
 </div> 

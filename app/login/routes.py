@@ -37,10 +37,4 @@ def logout():
     return redirect(url_for("login.login"))
 
 
-"""
-Register new user
-"""   
-@view.route("/register", methods=['GET'])
-def register_view():
-    return render_template('login/register.html')
 
